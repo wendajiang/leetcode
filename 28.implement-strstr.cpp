@@ -53,10 +53,11 @@ public:
             if(k == -1 || pattern[j] == pattern[k]){
                 ++k;
                 ++j;
-                if(pattern[k] != pattern[j])
-                    next[j] = k;
-                else
-                    next[j] = next[k];
+                next[j] = k;
+                //if(pattern[k] != pattern[j])
+                  //  next[j] = k;
+                //else
+                  //  next[j] = next[k];
             }else{
                 k = next[k];
             }
