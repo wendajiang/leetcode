@@ -28,6 +28,7 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+<<<<<<< HEAD:206.reverse-linked-list.cpp
         if(head == NULL || head->next == NULL){
             return head;
         }
@@ -43,5 +44,8 @@ public:
         
         }
         return head;
+=======
+
+>>>>>>> b2b8a96fd623e83f9b08a5da7d8c044305d74399:206.reverse-linked-list.notac.cpp
     }
 };
