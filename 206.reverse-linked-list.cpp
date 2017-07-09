@@ -29,21 +29,37 @@ class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
 
+        // if(head == NULL || head->next == NULL){
+        //     return head;
+        // }
+        // ListNode* cur = NULL;
+        // ListNode* pNext = NULL;
+        // cur = head;
+        // pNext = cur->next;
+        // while(pNext != NULL){
+        //     cur->next = pNext->next;
+        //     pNext->next = head;
+        //     head = pNext;
+        //     pNext = cur->next;
+        //
+        // }
+        // return head;
+
         if(head == NULL || head->next == NULL){
             return head;
         }
-        ListNode* cur = NULL;
-        ListNode* pNext = NULL;
-        cur = head;
-        pNext = cur->next;
-        while(pNext != NULL){
-            cur->next = pNext->next;
-            pNext->next = head;
-            head = pNext;
-            pNext = cur->next;
-
+        ListNode *preHead = new ListNode(INT_MIN);
+        preHead->next = head;
+        ListNode *pre = preHead, *cur = preHead->next, *curNext = cur->next;
+        while(curNext){
+            cur->next = curNext->next;
+            curNext->next = preHead->next;
+            preHead->next = curNext;
+            curNext = cur->next;
         }
-        return head;
+        ListNode *tmpHead = preHead->next;
+        delete preHead;
+        return tmpHead;
 
     }
 };
