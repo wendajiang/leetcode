@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         vector<int> result;
-        
+
 
         map<int, int> mapping;
 
@@ -19,4 +19,5 @@ public:
         }
         return result;
     }
+
 };
