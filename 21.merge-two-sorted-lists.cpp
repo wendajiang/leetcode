@@ -4,8 +4,8 @@
  * https://leetcode.com/problems/merge-two-sorted-lists
  *
  * Easy (38.94%)
- * Total Accepted:    
- * Total Submissions: 
+ * Total Accepted:
+ * Total Submissions:
  * Testcase Example:  '[]\n[]'
  *
  * Merge two sorted linked lists and return it as a new list. The new list
@@ -29,7 +29,7 @@ public:
         ListNode* result = new ListNode((l1->val < l2->val) ? l1->val : l2->val);
         if(l1->val < l2->val)
             l1 = l1->next;
-        else 
+        else
             l2 = l2->next;
         ListNode* head = result;
         while(l1 != NULL && l2 != NULL){
