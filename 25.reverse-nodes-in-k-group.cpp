@@ -132,3 +132,74 @@ public:
 //     }
 //     return head;
 // }
+
+/*
+    有问题解法的思路，不过可以实现，通过递归的方式
+    ListNode* reverse(ListNode* first, ListNode* last)
+        {
+            ListNode* prev = last;
+
+            while ( first != last )
+            {
+                auto tmp = first->next;
+                first->next = prev;
+                prev = first;
+                first = tmp;
+            }
+
+            return prev;
+        }
+
+        ListNode* reverseKGroup(ListNode* head, int k)
+        {
+            auto node=head;
+            for (int i=0; i < k; ++i)
+            {
+                if ( ! node  )
+                    return head; // nothing to do list too sort
+                node = node->next;
+            }
+
+            auto new_head = reverse( head, node);
+            head->next = reverseKGroup( node, k);
+            return new_head;
+        }
+*/
+/*
+    仍然是有问题的思路，另一种实现方式
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+
+    ListNode *p1=head,*p2=head;
+    ListNode *first=NULL,*cur=head;
+    int n=0;
+    while(p1)
+    {
+        p1=p1->next;
+        n++;
+    }
+    n=n/k;
+    if(n==0||k==1) return head;
+    for(int i=0;i<n;i++)
+    {
+        ListNode *prev=NULL,*next=NULL;
+        int l=1;
+        p1=cur;
+        while(l++<=k)
+        {
+            next=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=next;
+        }
+        if(i>=1)
+            first->next=prev;
+        else
+            p2=prev;
+        first=p1;
+    }
+    first->next=cur;
+    return p2;
+}
+
+*/
