@@ -44,37 +44,91 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        int count = 1;
-        ListNode *tmpBegin = NULL;
-        ListNode *tmpEnd = NULL;
-        ListNode *cur = head;
+        if(head == NULL || k == 1) return head;
+        int num = 0;
+        ListNode * preHead = new ListNode(INT_MIN);
+        preHead->next = head;
+        ListNode *cur = head, *curNext = NULL, *pre = preHead;
         while(cur){
-            if(count == 1){
-                tmpBegin = cur;
-            }else if(count == k){
-                tmpEnd = cur;
-                count = 1;
-                reverseList(tmpBegin, tmpEnd);
-            }
-            count ++;
+            num++;
             cur = cur->next;
         }
-        return head;
-    }
-
-    void reverseList(ListNode*& begin, ListNode*& end){
-        if(begin == end) return;
-        ListNode *cur = begin;
-        ListNode *curNext = cur->next;
-        while(curNext != end->next){
-            cur = curNext->next;
-            curNext->next = begin;
-            begin = curNext;
+        while(num >= k){
+            cur = pre->next;
             curNext = cur->next;
+            for(int i = 1; i < k; i++){
+                cur->next = curNext->next;
+                curNext->next = pre->next;
+                pre->next = curNext;
+                curNext = cur->next;
+            }
+            pre = cur;
+            num -= k;
         }
-
+        ListNode *tmpHead = preHead;
+        delete preHead;
+        return tmpHead->next;
     }
+
 };
+
+/*
+    可以看到加一个头结点好处理的多
+*/
+
+/*
+    有问题的解法，其中学到了了引用传递的问题，需要去细细琢磨
+    每次传完之后就很难处理，从begin到end之间反转实现了的
+    但是每次跳出子函数后，值需要重新复制，如果继续改进，需要加很多变量
+    很不清晰
+
+    思路记录：很navie，就是写一个从begin到end的子函数，不断调用
+        子函数没能实现
+*/
+// void reverseList(ListNode *&begin, ListNode *&end){
+//     if(begin == end)return;
+//     ListNode *cur = begin;
+//     ListNode *tmpEnd = end->next;
+//     ListNode *cNext = cur->next;
+//     while(cNext != tmpEnd){
+//         cur->next = cNext->next;
+//         cNext->next = begin;
+//         begin = cNext;
+//         cNext = cur->next;
+//     }
+// //    return begin;
+// }
+// ListNode* reverseKGroup(ListNode *head, int k){
+//     int count = 1;
+//     ListNode *tmpBegin = NULL;
+//     ListNode *tmpEnd = NULL;
+//     ListNode *cur = head;
+//     bool isFirst = true;
+//     while(cur){
+//         if(count == 1){
+//             tmpBegin = cur;
+//         }else if(count == k){
+//             tmpEnd = cur;
+//             count = 1;
+//             reverseList(tmpBegin, tmpEnd);
+//             if(isFirst){
+//                 head = tmpBegin;
+//                 isFirst = false;
+//             }else{
+//
+//             }
+//
+//
+//             cur = cur->next;
+//             continue;
+//         }
+//         count++;
+//         cur = cur->next;
+//     }
+//     return head;
+// }
