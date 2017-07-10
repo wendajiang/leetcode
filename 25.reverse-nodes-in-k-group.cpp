@@ -58,9 +58,13 @@ public:
                 tmpEnd = cur;
                 count = 1;
                 reverseList(tmpBegin, tmpEnd);
+                cur = cur->next;
+                continue;
             }
             count ++;
             cur = cur->next;
+            string ss;
+            
         }
         return head;
     }
