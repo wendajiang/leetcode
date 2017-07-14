@@ -86,7 +86,7 @@ public:
         vector<int>::iterator m = nums.begin();  // m will mark the virtual "S.end()".
         for (int& val : nums) {
             auto it = lower_bound(nums.begin(), m, val);
-            *it = val;
+            *it = val;  //ues nums the memory the val
             if (it == m)
                 m++;
             }
