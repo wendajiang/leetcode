@@ -35,7 +35,7 @@ public:
                 }
                 if(sum < target){
                     if(target - sum < minV){
-                        minV = target -sum;
+                        minV = target - sum;
                         record = sum;
                     }
                     start ++;
