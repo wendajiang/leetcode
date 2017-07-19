@@ -36,7 +36,7 @@ public:
         memset(P, 0 , s.size()*s.size()*sizeof(int));
         int maxL = 0, start = 0, end = 0;
         for(int i = 0; i < s.size(); i++){
-            for(int j = 0; j < i; j++){
+            for(int j = i - 1; j >= 0; j--){
                 P[j][i] = (s[j] == s[i] && (i - j < 2 || P[j + 1][i - 1]));
                 if(P[j][i] && maxL < (i - j + 1)){
                     maxL = i - j + 1;
