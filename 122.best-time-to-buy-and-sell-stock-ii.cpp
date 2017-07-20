@@ -18,6 +18,7 @@
  */
 class Solution {
 public:
+    // 不用求差值数组，可以直接求
     int maxProfit(vector<int>& prices) {
         if(!prices.size()) return 0;
         vector<int> diff;

@@ -36,25 +36,39 @@
  */
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        vector<int> diff;
-        for(int i = 1; i < prices.size(); i++){
-            diff.push_back(prices[i] - prices[i-1]);
-            // cout << diff.back() << " ";
+    // 不用DP，可以直接做
+    int maxProfit(vector<int>& prices){
+        if(prices.size() <= 1) return 0;
+        int minV = INT_MAX;
+        int maxP = INT_MIN;
+        for(int i = 0; i < prices.size(); i++){
+            minV = std::min(minV, prices[i]);
+            maxP = std::max(maxP, prices[i] - minV);
         }
-        //compute prefix of diff
-        for(int i = 1; i < diff.size(); i++){
-            diff[i] += diff[i - 1];
-            // cout << diff[i] << " ";
-        }
-        int minPre = 0;
-        int profit = INT_MIN;
-        for(int i = 0; i < diff.size(); i++){
-            profit = std::max(profit, diff[i] - minPre);
-            minPre = std::min(minPre, diff[i]);
-        }
-        if(profit < 0)
-            return 0;
-        return profit;
+        return maxP;
     }
+
+    // int maxProfit(vector<int>& prices) {
+    //     vector<int> diff;
+    //     for(int i = 1; i < prices.size(); i++){
+    //         diff.push_back(prices[i] - prices[i-1]);
+    //         // cout << diff.back() << " ";
+    //     }
+    //     //compute prefix of diff
+    //     for(int i = 1; i < diff.size(); i++){
+    //         diff[i] += diff[i - 1];
+    //         // cout << diff[i] << " ";
+    //     }
+    //     int minPre = 0;
+    //     int profit = INT_MIN;
+    //     for(int i = 0; i < diff.size(); i++){
+    //         profit = std::max(profit, diff[i] - minPre);
+    //         minPre = std::min(minPre, diff[i]);
+    //     }
+    //     if(profit < 0)
+    //         return 0;
+    //     return profit;
+    // }
+
+
 };
