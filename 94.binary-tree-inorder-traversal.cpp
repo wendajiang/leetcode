@@ -38,7 +38,7 @@
  */
 class Solution {
 public:
-
+    //Morris Traversal
     vector<int> inorderTraversal(TreeNode* root) {
         TreeNode *cur = root, *pre = NULL;
         vector<int> res;
