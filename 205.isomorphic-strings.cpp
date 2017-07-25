@@ -28,21 +28,47 @@
  */
 class Solution {
 public:
-    bool isIsomorphic(string s, string t) {
-        if(s.size() != t.size()) return false;
-        map<char,char> mapping;
+    // bool isIsomorphic(string s, string t) {
+    //     if(s.size() != t.size()) return false;
+    //     map<char,char> mapping;
+    //     for(int i = 0; i < s.size(); i++){
+    //         if(mapping.find(s[i]) != mapping.cend()){
+    //             if(mapping[s[i]] != t[i]) //if the matching postition letter is not matched
+    //                 return false;
+    //         }else{
+    //             for(auto it : mapping){
+    //                 if(it.second == t[i])
+    //                     return false;
+    //             }//if two characters map to the same character
+    //             mapping[s[i]] = t[i];
+    //         }
+    //     }
+    //     return true;
+    // }
+    bool isIsomorphic(string s, string t){
+        vector<int> mapping(256 + 1, 0);
+        vector<int> mapping2(256 + 1, 0);
         for(int i = 0; i < s.size(); i++){
-            if(mapping.find(s[i]) != mapping.cend()){
-                if(mapping[s[i]] != t[i]) //if the matching postition letter is not matched 
-                    return false;
-            }else{
-                for(auto it : mapping){
-                    if(it.second == t[i])
-                        return false;
-                }//if two characters map to the same character
+            if(mapping[s[i]] == 0 && mapping2[t[i]] == 0){
                 mapping[s[i]] = t[i];
+                mapping2[t[i]] = s[i];
+            }else{
+                if(mapping[s[i]] != t[i] || mapping2[t[i]] != s[i])
+                    return false;
             }
         }
         return true;
+
+        // //问题在于无法判断是否映射到同一个letter上
+        // vector<int> mapping(256 + 1, 0);
+        // for(int i = 0; i < s.size(); i++){
+        //     if(mapping[s[i]] == 0){
+        //         mapping[s[i]] = t[i];
+        //     }else{
+        //         if(mapping[s[i]] != t[i])
+        //             return false;
+        //     }
+        // }
+        // return true;
     }
 };
