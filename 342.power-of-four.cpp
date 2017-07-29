@@ -25,19 +25,21 @@
 class Solution {
 public:
     bool isPowerOfFour(int num) {
-        if(num == 1) return true;
-        int mark = 0x55555554;
-        int notmark = 0xaaaaaaab;
-        int result1 = (num & mark);
-        int count = 0;
-        while(result1){
-            count++;
-            result1 = result1 & (result1 - 1);
-        }
-        int result2 = (num & notmark);
-        if(count == 1 && result2 == 0){
-            return true;
-        }else
-            return false;
+        // if(num == 1) return true;
+        // int mark = 0x55555554;
+        // int notmark = 0xaaaaaaab;
+        // int result1 = (num & mark);
+        // int count = 0;
+        // while(result1){
+        //     count++;
+        //     result1 = result1 & (result1 - 1);
+        // }
+        // int result2 = (num & notmark);
+        // if(count == 1 && result2 == 0){
+        //     return true;
+        // }else
+        //     return false;
+
+        return fmod((log10(num) / log10(4)), 1) == 0;
     }
 };
