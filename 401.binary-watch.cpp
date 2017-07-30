@@ -35,60 +35,86 @@
  */
 class Solution {
 public:
+    // vector<string> readBinaryWatch(int num) {
+    //     vector<string> res;
+    //     vector<vector<bool>> solution;
+    //     vector<bool> binary;
+    //     int count1 = 0;
+    //     dfs(num, solution, binary, count1);
+    //     for(auto e : solution){
+    //         string tmp = change2String(e);
+    //         if(tmp.size() > 0){
+    //             res.push_back(tmp);
+    //         }
+    //     }
+    //     return res;
+    // }
+    //
+    // void dfs(int num, vector<vector<bool>>& solution,vector<bool>binary, int count1){
+    //     if(binary.size() >= 10 && count1 < num){
+    //         return;
+    //     }else if(binary.size() == 10 && count1 == num){
+    //         solution.push_back(binary);
+    //         return;
+    //     }else if(binary.size() < 10 && count1 == num){
+    //         while(binary.size() < 10){
+    //             binary.push_back(false);
+    //         }
+    //         solution.push_back(binary);
+    //         return;
+    //     }
+    //     binary.push_back(false);
+    //     dfs(num, solution, binary , count1);
+    //     binary.pop_back();
+    //     binary.push_back(true);
+    //     dfs(num, solution, binary, count1 + 1);
+    //     binary.pop_back();
+    // }
+    // string change2String(vector<bool> watch){
+    //     string res;
+    //     int hour = 0;
+    //     int minute = 0;
+    //     for(int i = 3; i >=0; i--){
+    //         if(watch[i]){
+    //             hour += std::pow(2, 3 - i);
+    //         }
+    //     }
+    //     if(hour <= 11) res.append(to_string(hour));
+    //     if(res.size() > 0) res.push_back(':');
+    //     for(int i = 9; i >= 4; i--){
+    //         if(watch[i])
+    //             minute += std::pow(2, 9 - i);
+    //     }
+    //     if(minute <= 59 && minute >= 10) res.append(to_string(minute));
+    //     else if(minute < 10) res.append("0" + to_string(minute));
+    //     if(res.size() >= 4)
+    //         return res;
+    //     else return "";
+    // }
+
+    // solution的方法，DFS深度较浅，使用了循环
+    vector<int> hour = {1, 2, 4, 8}, minute = {1, 2, 4, 8, 16, 32};
+public:
     vector<string> readBinaryWatch(int num) {
         vector<string> res;
-        vector<vector<bool>> solution;
-        vector<bool> binary;
-        int count1 = 0;
-        dfs(num, solution, binary, count1);
-        for(auto e : solution){
-            string tmp = change2String(e);
-            if(tmp.size() > 0){
-                res.push_back(tmp);
-            }
-        }
+        helper(res, make_pair(0, 0), num, 0);
         return res;
     }
 
-    void dfs(int num, vector<vector<bool>>& solution,vector<bool>binary, int count1){
-        if(binary.size() >= 10 && count1 < num){
+    void helper(vector<string>& res, pair<int, int> time, int num, int start_point) {
+        if (num == 0) {
+            res.push_back(to_string(time.first) +  (time.second < 10 ?  ":0" : ":") + to_string(time.second));
             return;
-        }else if(binary.size() == 10 && count1 == num){
-            solution.push_back(binary);
-            return;
-        }else if(binary.size() < 10 && count1 == num){
-            while(binary.size() < 10){
-                binary.push_back(false);
+        }
+        for (int i = start_point; i < hour.size() + minute.size(); i ++)
+            if (i < hour.size()) {
+                time.first += hour[i];
+                if (time.first < 12)     helper(res, time, num - 1, i + 1);     // "hour" should be less than 12.
+                time.first -= hour[i];
+            } else {
+                time.second += minute[i - hour.size()];
+                if (time.second < 60)    helper(res, time, num - 1, i + 1);     // "minute" should be less than 60.
+                time.second -= minute[i - hour.size()];
             }
-            solution.push_back(binary);
-            return;
-        }
-        binary.push_back(false);
-        dfs(num, solution, binary , count1);
-        binary.pop_back();
-        binary.push_back(true);
-        dfs(num, solution, binary, count1 + 1);
-        binary.pop_back();
-    }
-    string change2String(vector<bool> watch){
-        string res;
-        int hour = 0;
-        int minute = 0;
-        for(int i = 3; i >=0; i--){
-            if(watch[i]){
-                hour += std::pow(2, 3 - i);
-            }
-        }
-        if(hour <= 11) res.append(to_string(hour));
-        if(res.size() > 0) res.push_back(':');
-        for(int i = 9; i >= 4; i--){
-            if(watch[i])
-                minute += std::pow(2, 9 - i);
-        }
-        if(minute <= 59 && minute >= 10) res.append(to_string(minute));
-        else if(minute < 10) res.append("0" + to_string(minute));
-        if(res.size() >= 4)
-            return res;
-        else return "";
     }
 };
