@@ -92,7 +92,7 @@ public:
     //     else return "";
     // }
 
-    // solution的方法，DFS深度较浅，使用了循环
+    // solution的方法，DFS深度较浅，使用了循环，0ms
     vector<int> hour = {1, 2, 4, 8}, minute = {1, 2, 4, 8, 16, 32};
 public:
     vector<string> readBinaryWatch(int num) {
