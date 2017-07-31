@@ -40,6 +40,7 @@ public:
                 int distance = getDistanceSquare(points[i], points[j]);
                 // group[distance]++;
                 res += 2 * group[distance]++;//不用下面的一个循环，在此做加法优化速度
+                                             //实际上就是n(n-1)
             }
             // for(auto &g : group){
             //     if(g.second > 1){
