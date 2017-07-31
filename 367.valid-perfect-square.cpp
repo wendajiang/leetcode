@@ -38,7 +38,7 @@ public:
         long long low = 1, high = num;
         while(low <= high){
             long long  mid = low + ((high - low) >> 1);
-            long long sqmid = mid * mid;
+            long long sqmid = mid * mid; //long 都不能通过所有case，long long才行
             if(sqmid == num){
                 return true;
             }else if(sqmid < num){
