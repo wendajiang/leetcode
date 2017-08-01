@@ -23,7 +23,7 @@ public:
         float last;
         do{
             last = val;
-            val = (val + dividend/val) / 2;
+            val = (val + dividend/val) / 2;// 关键代码
         }while (abs(val - last) > EPS);
         int result = val;
         if(result * result > x){
