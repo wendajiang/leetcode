@@ -111,5 +111,6 @@ whose next greater element should be 6
             }
         }
         return res;
+        
     }
 };
