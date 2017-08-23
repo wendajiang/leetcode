@@ -46,6 +46,7 @@ public:
             for(int i = curReach; i <= n; i ++){
                 maxReach = std::max(i + nums[i], maxReach);
             }
+            if(maxReach <= n) return 0;
             curReach = n + 1;
             level ++;
         }
