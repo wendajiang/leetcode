@@ -104,13 +104,10 @@ whose next greater element should be 6
             s.push(e);
         }
         for(auto &fe : findNums){
-            if(ump.count(fe)){
-                res.push_back(ump[fe]);
-            }else{
-                res.push_back(-1);
-            }
+            if(ump.count(fe)) res.push_back(ump[fe]);
+            else res.push_back(-1);
         }
         return res;
-        
     }
+    
 };
