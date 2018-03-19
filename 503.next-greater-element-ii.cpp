@@ -34,6 +34,7 @@
  */
 class Solution {
 public:
+    // stack 存储
     vector<int> nextGreaterElements(vector<int>& nums) {
         int len = nums.size();
         vector<int> res(len, -1);
