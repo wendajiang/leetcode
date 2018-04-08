@@ -39,58 +39,82 @@
  */
 class Solution {
 public:
+    // //自己做的
+    // vector<string> res;
+    // vector<vector<int>> paths;
+    // void dfs(vector<vector<int>>& G, int cur, int dist, vector<int> tmp){
+    //     vector<int> &curL = G[cur];
+    //     for(int i = 0; i < curL.size(); i++){
+    //         tmp.push_back(curL[i]);
+    //         if(curL[i] == dist){
+    //             paths.push_back(tmp);
+    //             return;
+    //         }
+    //         dfs(G, curL[i], dist, tmp);
+    //         tmp.pop_back();
+    //     }
+    // }
+    // vector<string> wordBreak(string s, vector<string>& wordDict) {
+    //     int len = s.size();
+    //     if(len == 0) {
+    //         return res;
+    //     }
+    //     set<string> dict;
+    //     for(int i = 0; i < wordDict.size(); i++)
+    //         dict.insert(wordDict[i]);
+    //     vector<bool> dp(len + 1, false);
+    //     vector<vector<int>> path(len + 1);
+    //
+    //     dp[0] = true;
+    //
+    //     for(int pos = 0; pos < len; pos++){
+    //         for(int i = pos; dp[pos] && i < len; i++){
+    //             if(dict.find(s.substr(pos, i - pos + 1)) != dict.end()){
+    //                 dp[i + 1] = true;
+    //                 path[pos].push_back(i + 1);
+    //             }
+    //         }
+    //     }
+    //     if(dp[len] == false) return res;
+    //     vector<int> tmp;
+    //     dfs(path, 0, len, tmp);
+    //     for(int i = 0; i < paths.size(); i++){
+    //         string ans = "";
+    //         int pre = 0;
+    //         for(int j = 0; j < paths[i].size() - 1; j++){
+    //             ans += s.substr(pre, paths[i][j] - pre) + " ";
+    //             pre = paths[i][j];
+    //         }
+    //         ans += s.substr(pre, paths[i][paths[i].size() - 1] - pre);
+    //         res.push_back(ans);
+    //     }
+    //     return res;
+    // }
 
-    vector<string> res;
-    vector<vector<int>> paths;
-
-    void dfs(vector<vector<int>>& G, int cur, int dist, vector<int> tmp){
-        vector<int> &curL = G[cur];
-        for(int i = 0; i < curL.size(); i++){
-            tmp.push_back(curL[i]);
-            if(curL[i] == dist){
-                paths.push_back(tmp);
-                return;
-            }
-            dfs(G, curL[i], dist, tmp);
-            tmp.pop_back();
-        }
-    }
-
-
-    vector<string> wordBreak(string s, vector<string>& wordDict) {
-        int len = s.size();
-        if(len == 0) {
-            return res;
-        }
-        set<string> dict;
+    //直接dfs做，通过map记忆搜索
+    vector<string> wordBreak(string s, vector<string>& wordDict){
+        unordered_set<string> dict;
         for(int i = 0; i < wordDict.size(); i++)
             dict.insert(wordDict[i]);
-        vector<bool> dp(len + 1, false);
-        vector<vector<int>> path(len + 1);
+        return wordBreak(s, dict);
+    }
 
-        dp[0] = true;
-
-        for(int pos = 0; pos < len; pos++){
-            for(int i = pos; dp[pos] && i < len; i++){
-                if(dict.find(s.substr(pos, i - pos + 1)) != dict.end()){
-                    dp[i + 1] = true;
-                    path[pos].push_back(i + 1);
-                }
+    vector<string> wordBreak(string s, unordered_set<string> &dict){
+        vector<string> res;
+        if(dict.find(s) != dict.end())
+            res.push_back(s);
+        for(int i = 1; i < s.size(); i++){
+            string w = s.substr(i);
+            if(dict.find(w) == dict.end())
+                continue;
+            string str = s.substr(0,i);
+            vector<string> left = wordBreak(str,dict);
+            for(vector<string>::iterator it = left.begin(); it != left.end(); it++){
+                *it += " " + w;
             }
-        }
-        if(dp[len] == false) return res;
-        vector<int> tmp;
-        dfs(path, 0, len, tmp);
-        for(int i = 0; i < paths.size(); i++){
-            string ans = "";
-            int pre = 0;
-            for(int j = 0; j < paths[i].size() - 1; j++){
-                ans += s.substr(pre, paths[i][j] - pre) + " ";
-                pre = paths[i][j];
-            }
-            ans += s.substr(pre, paths[i][paths[i].size() - 1] - pre);
-            res.push_back(ans);
+            res.insert(res.begin(), left.begin(), left.end());
         }
         return res;
     }
+
 };
