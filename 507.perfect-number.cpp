@@ -33,10 +33,12 @@ public:
         // static unordered_set<int> n = {6, 28, 496, 8128, 33550336};
         // return n.count(num);
         vector<int>res(1,1);
-        int upper=num;
-        for(int i=2;i<upper;i++) if(num%i==0) res.push_back(i),res.push_back(num/i),upper=num/i;
-        int sum=0;
-        for(auto i:res) sum+=i;
-        return sum==num && num!=1;
+        int upper = num;
+        for(int i = 2;i < upper; i++)
+            if(num % i==0)
+                res.push_back(i),res.push_back(num/i),upper=num/i;
+        int sum = 0;
+        for(auto i : res) sum += i;
+        return sum == num && num != 1;
     }
 };
