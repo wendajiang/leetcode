@@ -34,39 +34,7 @@
  */
 class Solution {
 public:
-    // string simplifyPath(string path) {
-    //     string res = "";
-    //     stack<int> st;
-    //     vector<string> sli;
-    //     int last = 0;
-    //     int cur = last + 1;
-    //     while(cur < path.size()){
-    //         while(path[cur] != '/')cur++;
-    //         sli.push_back(path.substr(last + 1, cur - last - 1));
-    //         while(path[cur] == '/') cur++;
-    //         last = cur - 1;
-    //     }
-    //     if(last != cur - 1) sli.push_back(path.substr(last + 1, cur - last - 1));
-    //     cur = 0;
-    //     vector<bool> work(sli.size(), 1);
-    //     while(cur < sli.size()){
-    //         if(sli[cur] == ".") work[cur] = 0;
-    //         if(sli[cur] == "..") {
-    //             work[cur] = 0;
-    //             int tmp = cur;
-    //             while(tmp >= 1 && work[tmp] == 0) tmp--;
-    //             work[tmp] = 0;
-    //         }
-    //         cur++;
-    //     }
-    //
-    //     for(int i = 0; i < sli.size(); i++){
-    //         if(work[i])
-    //             res += "/" + sli[i];
-    //     }
-    //     if(res == "") res += "/";
-    //     return res;
-    // }
+
     string simplifyPath(string path) {
         string res, tmp;
         vector<string> stk;
