@@ -56,7 +56,7 @@ class Solution {
 public:
     vector<string> flag{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
     int uniqueMorseRepresentations(vector<string>& words) {
-        set<string> res;
+        unordered_set<string> res;
         for(auto &s : words){
             string morse = "";
             for(auto &c : s){
