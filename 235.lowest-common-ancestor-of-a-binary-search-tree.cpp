@@ -46,47 +46,62 @@
  */
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-
-        if(aIsRootOfB(p, q)){
-            TreeNode* cur = root;
-            TreeNode* pre;
-            while(cur != p){
-                pre = cur;
-                if(cur->val < p->val){
-                    cur = cur->right;
-                }else{
-                    cur = cur->left;
-                }
-            }
-            return cur;
-        }else if(aIsRootOfB(q, p)){
-            TreeNode* cur = root;
-            TreeNode* pre;
-            while(cur != q){
-                pre = cur;
-                if(cur->val < q->val){
-                    cur = cur ->right;
-                }else{
-                    cur = cur->left;
-                }
-            }
-            return cur;
-        }else{
-            if((root->val > p->val) && (root->val > q->val)){
-                return lowestCommonAncestor(root->left, p, q);
-            }else if((root->val < p->val) && (root->val < q->val)){
-                return lowestCommonAncestor(root->right, p, q);
-            }else if(((root->val < p->val) && (root->val > q->val)) || ((root->val > p->val) && (root->val < q->val))){
-                return root;
-            }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
+        // if (p -> val < root -> val && q -> val < root -> val)
+        //     return lowestCommonAncestor(root -> left, p, q);
+        // if (p -> val > root -> val && q -> val > root -> val)
+        //     return lowestCommonAncestor(root -> right, p, q);
+        // return root;
+        TreeNode* cur = root;
+        while (true) {
+            if (p -> val < cur -> val && q -> val < cur -> val)
+                cur = cur -> left;
+            else if (p -> val > cur -> val && q -> val > cur -> val)
+                cur = cur -> right;
+            else return cur;
         }
-        return nullptr;
     }
-
-    bool aIsRootOfB(TreeNode* a, TreeNode* b){
-        if((!a && b) || (!b && a) || (!a && !b)) return false;
-        if(a == b) return true;
-        return aIsRootOfB(a->left,  b) || aIsRootOfB(a->right, b);
-    }
+    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    //
+    //     if(aIsRootOfB(p, q)){
+    //         TreeNode* cur = root;
+    //         TreeNode* pre;
+    //         while(cur != p){
+    //             pre = cur;
+    //             if(cur->val < p->val){
+    //                 cur = cur->right;
+    //             }else{
+    //                 cur = cur->left;
+    //             }
+    //         }
+    //         return cur;
+    //     }else if(aIsRootOfB(q, p)){
+    //         TreeNode* cur = root;
+    //         TreeNode* pre;
+    //         while(cur != q){
+    //             pre = cur;
+    //             if(cur->val < q->val){
+    //                 cur = cur ->right;
+    //             }else{
+    //                 cur = cur->left;
+    //             }
+    //         }
+    //         return cur;
+    //     }else{
+    //         if((root->val > p->val) && (root->val > q->val)){
+    //             return lowestCommonAncestor(root->left, p, q);
+    //         }else if((root->val < p->val) && (root->val < q->val)){
+    //             return lowestCommonAncestor(root->right, p, q);
+    //         }else if(((root->val < p->val) && (root->val > q->val)) || ((root->val > p->val) && (root->val < q->val))){
+    //             return root;
+    //         }
+    //     }
+    //     return nullptr;
+    // }
+    //
+    // bool aIsRootOfB(TreeNode* a, TreeNode* b){
+    //     if((!a && b) || (!b && a) || (!a && !b)) return false;
+    //     if(a == b) return true;
+    //     return aIsRootOfB(a->left,  b) || aIsRootOfB(a->right, b);
+    // }
 };

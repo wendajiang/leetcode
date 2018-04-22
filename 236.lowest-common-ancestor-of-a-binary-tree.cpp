@@ -46,41 +46,53 @@
  */
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(aIsRootOfB(p, q)){
-            return p;
-        }else if(aIsRootOfB(q, p)){
-            return q;
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root == p || root == q || root == NULL) return root;
+        TreeNode* parent1 = lowestCommonAncestor(root->left, p, q);
+        TreeNode* parent2 = lowestCommonAncestor(root->right, p, q);
+        if(parent1 && parent2){
+            return root;
         }else{
-            vector<TreeNode*> nodes, res;
-            findPath(root, p, nodes, res);
-            for(int i = res.size() - 1; i >=0; i--){
-                if(aIsRootOfB(res[i], q)){
-                    return res[i];
-                }
-            }
+            return parent1 ? parent1 : parent2;
         }
-        return nullptr;
     }
 
-    bool aIsRootOfB(TreeNode* a, TreeNode* b){
-        if((!a && b) || (!b && a) || (!a && !b)) return false;
-        if(a == b) return true;
-        return aIsRootOfB(a->left,  b) || aIsRootOfB(a->right, b);
-    }
 
-    void findPath(TreeNode* a, TreeNode* b, vector<TreeNode*> path, vector<TreeNode*>& res){
-        path.push_back(a);
-        if(a == b){
-            res = path;
-            return;
-        }else if(!a){
-            path.pop_back();// pop the nullptr
-            path.pop_back();// pop the leaf 
-            return;
-        }
-        findPath(a->left, b, path, res);
-        findPath(a->right, b, path, res);
-
-    }
+    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    //     if(aIsRootOfB(p, q)){
+    //         return p;
+    //     }else if(aIsRootOfB(q, p)){
+    //         return q;
+    //     }else{
+    //         vector<TreeNode*> nodes, res;
+    //         findPath(root, p, nodes, res);
+    //         for(int i = res.size() - 1; i >=0; i--){
+    //             if(aIsRootOfB(res[i], q)){
+    //                 return res[i];
+    //             }
+    //         }
+    //     }
+    //     return nullptr;
+    // }
+    //
+    // bool aIsRootOfB(TreeNode* a, TreeNode* b){
+    //     if((!a && b) || (!b && a) || (!a && !b)) return false;
+    //     if(a == b) return true;
+    //     return aIsRootOfB(a->left,  b) || aIsRootOfB(a->right, b);
+    // }
+    //
+    // void findPath(TreeNode* a, TreeNode* b, vector<TreeNode*> path, vector<TreeNode*>& res){
+    //     path.push_back(a);
+    //     if(a == b){
+    //         res = path;
+    //         return;
+    //     }else if(!a){
+    //         path.pop_back();// pop the nullptr
+    //         path.pop_back();// pop the leaf
+    //         return;
+    //     }
+    //     findPath(a->left, b, path, res);
+    //     findPath(a->right, b, path, res);
+    //
+    // }
 };
