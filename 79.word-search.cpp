@@ -33,50 +33,52 @@
  */
 class Solution {
 public:
+    // //最后一个case会超时
     // int dx[4] = {0, 0, 1, -1};
     // int dy[4] = {-1, 1, 0, 0};
     // bool exist(vector<vector<char>>& board, string word) {
     //     if(word.size() == 0) return true;
+    //     int m = board.size(), n = board[0].size();
+    //     vector<vector<bool>> vis(m, vector<bool>(n, 0));
+    //     vector<vector<bool>> tmp(m, vector<bool>(n, 0));
     //     vector<pair<int, int>> s;
     //     for(int i = 0; i < board.size(); i++){
     //         for(int j = 0; j < board[i].size(); j++){
-    //             if(board[i][j] == word[0]){
-    //                 s.emplace_back(i, j);
-    //             }
+    //             bool flag = false;
+    //             vis = tmp;
+    //             dfs(board, vis, 0, make_pair(i, j), word, flag);
+    //             if(flag) return true;
     //         }
-    //     }
-    //
-    //     for(int i = 0; i < s.size(); i++){
-    //         vector<vector<bool>> vis(board.size(), vector<bool>(board[0].size(), false));
-    //         bool flag = false;
-    //         dfs(board, vis, 0, s[i], word, flag);
-    //         if(flag)
-    //             return true;
     //     }
     //     return false;
     // }
     //
     // void dfs(vector<vector<char>>& board, vector<vector<bool>>& vis, int step, pair<int, int> cur, string& word, bool &flag){
-    //     if(step == word.size() - 1){
+    //     if(step == word.size() - 1 && word[step] == board[cur.first][cur.second]){
     //         flag = true;
     //         return;
     //     }
     //     int x = cur.first;
     //     int y = cur.second;
-    //     vis[x][y] = true;
-    //     for(int i = 0; i < 4; i++){
-    //         int nextx = x + dx[i];
-    //         int nexty = y + dy[i];
-    //         if(nextx >= 0 && nextx < board.size()
-    //         && nexty >= 0 && nexty < board[0].size()
-    //         && vis[nextx][nexty] == 0
-    //         && board[nextx][nexty] == word[step + 1]){
-    //             dfs(board, vis, step + 1, make_pair(nextx, nexty), word, flag);
+    //     if(word[step] == board[cur.first][cur.second]){
+    //         vis[x][y] = 1;
+    //         for(int i = 0; i < 4; i++){
+    //             int nextx = x + dx[i];
+    //             int nexty = y + dy[i];
+    //             if(nextx >= 0 && nextx < board.size()
+    //             && nexty >= 0 && nexty < board[0].size()
+    //             && vis[nextx][nexty] == 0
+    //             && board[nextx][nexty] == word[step + 1]){
+    //                 dfs(board, vis, step + 1, make_pair(nextx, nexty), word, flag);
+    //             }
     //         }
+    //         vis[x][y] = 0;
     //     }
-    //     vis[x][y] = false;
+    //
     // }
 
+
+    //discuss中的答案
     bool exist(vector<vector<char>>& board, string word){
         m = board.size();
         n = board[0].size();
