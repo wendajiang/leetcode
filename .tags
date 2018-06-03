@@ -1,0 +1,4 @@
+Solution	/Users/JohnJD/extra/GitHub/leetcode/287.find-the-duplicate-number.cpp	/^class Solution {$/;"	class	line:32	file:
+findDuplicate	/Users/JohnJD/extra/GitHub/leetcode/287.find-the-duplicate-number.cpp	/^    int findDuplicate(vector<int>& nums){$/;"	function	line:48	class:Solution	signature:(vector<int>& nums)
+Solution	/Users/JohnJD/extra/GitHub/leetcode/240.search-a-2d-matrix-ii.cpp	/^class Solution {$/;"	class	line:40	file:
+searchMatrix	/Users/JohnJD/extra/GitHub/leetcode/240.search-a-2d-matrix-ii.cpp	/^    bool searchMatrix(vector<vector<int>>& matrix, int target){$/;"	function	line:54	class:Solution	signature:(vector<vector<int>>& matrix, int target)
