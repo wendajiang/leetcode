@@ -31,6 +31,7 @@ public:
         size_t hash = hash_fn(longUrl);
         res.append(to_string(hash));
         mp.insert(make_pair(res, longUrl));
+        
         return res;
     }
 
