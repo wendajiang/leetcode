@@ -58,7 +58,21 @@ using namespace std;
 class Solution {
 public:
     int lastStoneWeight(vector<int>& stones) {
-        
+        priority_queue<int, vector<int>> pri_que;
+        for (int i = 0; i < stones.size(); i++) {
+            pri_que.push(stones[i]);
+        }
+
+        while(pri_que.size() > 1) {
+            int x = pri_que.top(); pri_que.pop();
+            int y = pri_que.top(); pri_que.pop();
+            int diff = x - y;
+            if (diff > 0) {
+                pri_que.push(diff);
+            }
+        }
+        int res = pri_que.size() > 0 ? pri_que.top() : 0;
+        return res;
     }
 };
 // @lc code=end
