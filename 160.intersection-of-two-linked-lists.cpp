@@ -45,40 +45,78 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int len1 = 0;
-        int len2 = 0;
-        ListNode* cur1 = headA;
-        ListNode* cur2 = headB;
-        while(cur1){
-            len1++;
-            cur1 = cur1->next;
+        if (headA == nullptr || headB == nullptr) return nullptr;
+        ListNode* cur = headA;
+        ListNode* end = nullptr;
+        while(cur->next) {
+            cur = cur->next;
         }
-        cur1 = headA;
-        while(cur2){
-            len2++;
-            cur2 = cur2->next;
-        }
-        cur2 = headB;
-        if(len1 > len2){
-            int tmp = len1 - len2;
-            while(tmp){
-                cur1 = cur1->next;
-                tmp--;
+        end = cur;
+        cur->next = headB;
+        ListNode* slow = headA, *fast = headA;
+        bool is_cycle = false;
+        while(slow && fast) {
+            slow = slow->next;
+            if (fast->next) {
+                fast = fast->next->next;
             }
-        }else if(len1 < len2){
-            int tmp = len2 - len1;
-            while(tmp){
-                cur2 = cur2->next;
-                tmp--;
+            else {
+                break;
+            }
+            if (slow == fast) {
+                is_cycle = true;
+                break;
             }
         }
-        while(cur1 && cur2){
-            if(cur1 == cur2){
-                return cur1;
+        if (is_cycle) {
+            slow = headA;
+            while(slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
             }
-            cur1 = cur1->next;
-            cur2 = cur2->next;
+            end->next = nullptr;
+            return slow;
         }
-        return nullptr;
+        else {
+            end->next = nullptr;
+            return nullptr;
+        }
     }
+    // ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    //     int len1 = 0;
+    //     int len2 = 0;
+    //     ListNode* cur1 = headA;
+    //     ListNode* cur2 = headB;
+    //     while(cur1){
+    //         len1++;
+    //         cur1 = cur1->next;
+    //     }
+    //     cur1 = headA;
+    //     while(cur2){
+    //         len2++;
+    //         cur2 = cur2->next;
+    //     }
+    //     cur2 = headB;
+    //     if(len1 > len2){
+    //         int tmp = len1 - len2;
+    //         while(tmp){
+    //             cur1 = cur1->next;
+    //             tmp--;
+    //         }
+    //     }else if(len1 < len2){
+    //         int tmp = len2 - len1;
+    //         while(tmp){
+    //             cur2 = cur2->next;
+    //             tmp--;
+    //         }
+    //     }
+    //     while(cur1 && cur2){
+    //         if(cur1 == cur2){
+    //             return cur1;
+    //         }
+    //         cur1 = cur1->next;
+    //         cur2 = cur2->next;
+    //     }
+    //     return nullptr;
+    // }
 };
