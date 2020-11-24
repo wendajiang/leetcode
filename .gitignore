@@ -50,7 +50,9 @@
 *.app
 
 */.DS_Store
-./.vscode/
+.vscode/**
 all.json
-.idea
-cmake-build-debug
+.idea/**
+cmake-build-debug/**
+build/**
+
