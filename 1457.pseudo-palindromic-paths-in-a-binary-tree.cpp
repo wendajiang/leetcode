@@ -84,36 +84,69 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> path;
     int res = 0;
     int pseudoPalindromicPaths (TreeNode* root) {
         res = 0;
+        vector<int> mp(10, 0);
         if (root == nullptr) return 0;
-        travel(root);
+        travel(root, mp);
         return res;
     }
 
-    void travel(TreeNode* node) {
+    void travel(TreeNode* node, std::vector<int>& mp) {
         if (node->left == nullptr && node->right == nullptr) {
-            path.push_back(node->val);
-            vector<int> mp(10, 0);
-            for(auto x : path) mp[x] ++;
+            mp[node->val] ++;
             int odd_cnt = 0;
             for (auto x : mp) {
                 if (x & 0x1 != 0) odd_cnt ++;
             }
             if (odd_cnt <= 1) res++;
-            path.pop_back();
+            mp[node->val] --;
             return;
         }
         else {
-            path.push_back(node->val);
+            mp[node->val] ++;
         }
-        if (node->left)  travel(node->left);
-        if (node->right) travel(node->right);
+        if (node->left)  travel(node->left, mp);
+        if (node->right) travel(node->right, mp);
 
-        path.pop_back();
+        mp[node->val] --;
     }
+
+    /**
+     * @note 炫技 https://zxi.mytechroad.com/blog/uncategorized/leetcode-1457-pseudo-palindromic-paths-in-a-binary-tree/
+     */
+    /*
+    int pseudoPalindromicPaths (TreeNode* node) {
+        vector<int> counts(10);
+        function<int(TreeNode*)> dfs = [&](TreeNode* node) {
+          if (!node) return 0;
+          ++counts[node->val];
+          int c = 0;
+          if (!node->left && !node->right) {
+            int odds = 0;
+            for (int i = 1; i <= 9; ++i)
+              if (counts[i] & 1) ++odds;
+            if (odds <= 1) c = 1;
+          }
+          int l = dfs(node->left);
+          int r = dfs(node->right);      
+          --counts[node->val];
+          return c + l + r;
+        };
+        return dfs(root);
+    }
+    int pseudoPalindromicPaths (TreeNode* node, int s = 0) {
+        if (!root) return 0;
+        s ^= (1 << root->val);
+        if (!root->left && !root->right)
+          return __builtin_popcount(s) <= 1;
+        return pseudoPalindromicPaths(root->left, s) 
+             + pseudoPalindromicPaths(root->right, s);
+    }
+
+    */
+
 };
 // @lc code=end
 
