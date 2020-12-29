@@ -103,32 +103,43 @@ public:
 
 private:
     bool searchCore(TrieNode *cur, string &word, int i) {
-        if (i == word.size() - 1) {
-            if (word[i] == '.') {
-                bool ans = false;
-                for (int l = 0; l < 26; l++) {
-                    if (cur->child[l] != nullptr)
-                        ans = ans | (cur->child[l]->leaf);
-                }
-                return ans;
+        if (i == word.size()) return cur->leaf;
+        if (word[i] != '.') {
+            int t = word[i] - 'a';
+            return cur->child[t] && searchCore(cur->child[t], word, i + 1);
+        } else {
+            for (auto &ch : cur->child) {
+                if (ch && searchCore(ch, word, i + 1)) return true;
             }
-            else {
-                if (cur->child[word[i] - 'a'] == nullptr) return false;
-                return cur->child[word[i] - 'a']->leaf;
-            }
+            return false;
         }
-        if (word[i] == '.') {
-            bool ans = false;
-            for (int l = 0; l < 26; l++) {
-                if (cur->child[l] != nullptr)
-                    ans = ans | searchCore(cur->child[l], word, i + 1);
-            }
-            return ans;
-        }
-        else {
-            if (cur->child[word[i] - 'a'] == nullptr) return false;
-            else return searchCore(cur->child[word[i] - 'a'], word, i + 1);
-        }
+
+        // if (i == word.size() - 1) {
+        //     if (word[i] == '.') {
+        //         bool ans = false;
+        //         for (int l = 0; l < 26; l++) {
+        //             if (cur->child[l] != nullptr)
+        //                 ans = ans | (cur->child[l]->leaf);
+        //         }
+        //         return ans;
+        //     }
+        //     else {
+        //         if (cur->child[word[i] - 'a'] == nullptr) return false;
+        //         return cur->child[word[i] - 'a']->leaf;
+        //     }
+        // }
+        // if (word[i] == '.') {
+        //     bool ans = false;
+        //     for (int l = 0; l < 26; l++) {
+        //         if (cur->child[l] != nullptr)
+        //             ans = ans | searchCore(cur->child[l], word, i + 1);
+        //     }
+        //     return ans;
+        // }
+        // else {
+        //     if (cur->child[word[i] - 'a'] == nullptr) return false;
+        //     else return searchCore(cur->child[word[i] - 'a'], word, i + 1);
+        // }
     }
 private:
    
