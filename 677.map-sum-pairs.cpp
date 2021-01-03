@@ -60,6 +60,49 @@ using namespace std;
 // @lc code=start
 class MapSum {
 public:
+    /** Initialize your data structure here. */
+    MapSum() {}
+    
+    void insert(string key, int val) {
+        int inc = val - vals_[key];
+        Trie* p = &root;
+        for (const char c : key) {
+            if (!p->children[c])
+                p->children[c] = new Trie();
+            p->children[c]->sum += inc;
+            p = p->children[c];
+        }
+        vals_[key] = val;
+    }
+    
+    int sum(string prefix) {
+        Trie* p = &root;
+        for (const char c : prefix) {
+            if (!p->children[c])
+                return 0;
+            p = p->children[c];
+        }
+        return p->sum;
+    }
+private:
+    struct Trie {
+        Trie(): children(128, nullptr), sum(0){}
+        ~Trie(){
+            for (auto child : children)
+                if (child) delete child;
+            children.clear();
+        }
+        vector<Trie*> children;
+        int sum;
+    };
+    
+    Trie root;
+    unordered_map<string, int> vals_;
+};
+
+/*
+class MapSum {
+public:
     struct node {
         int ch[26];
         int val;
@@ -69,7 +112,6 @@ public:
         }
     };
     vector<node> tree;
-    /** Initialize your data structure here. */
     MapSum() {
         tree.emplace_back(node());
     }
@@ -106,7 +148,7 @@ public:
         }
     }
 };
-
+*/
 /**
  * Your MapSum object will be instantiated and called as such:
  * MapSum* obj = new MapSum();
