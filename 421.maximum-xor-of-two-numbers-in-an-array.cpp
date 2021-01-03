@@ -69,39 +69,36 @@ using namespace std;
 class Solution {
 public:
     struct node {
-        int ch[2];
+        node *ch[2];
         node() {
-            memset(ch, 0, sizeof(ch));
+            fill_n(ch, 2, nullptr);
         }
     };
 
     vector<node> tree;
 
     int findMaximumXOR(vector<int>& nums) {
-        tree.emplace_back(node());
-        int add = 0;
+        node *root = new node();
+        node* p = root;
         int maxxor = 0;
         int ans = 0;
-        int peek = 0;
+        node* q = root;
         for (int i = 0; i < nums.size(); i++) {
-            add = 0;
+            p = root;
+            q = root;
             ans = 0;
-            peek = 0;
             for (int j = 30; j >= 0; j--) {
                 ans <<= 1;
                 int tmp = (nums[i] >> j) & 0x1;
-                if (!tree[add].ch[tmp]) {
-                    tree.emplace_back(node());
-                    tree[add].ch[tmp] = tree.size() - 1;
-                }
-                add = tree[add].ch[tmp];
+                if (p->ch[tmp] == nullptr) p->ch[tmp] = new node();
+                p = p->ch[tmp];
 
-                if (tree[peek].ch[1 - tmp]) {
-                    peek = tree[peek].ch[1 - tmp];
+                if (q->ch[1 - tmp] != nullptr) {
+                    q = q->ch[1 - tmp];
                     ans += 1;
                 }
                 else {
-                    peek = tree[peek].ch[tmp];
+                    q = q->ch[tmp];
                 }
                 
             }
