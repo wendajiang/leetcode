@@ -1,0 +1,6 @@
+clang
+-std=c++17
+-isystem/usr/local/include
+-I/usr/local/include/c++/10.2.0
+-I/usr/local/include/c++/10.2.0/x86_64-apple-darwin20
+-I.
