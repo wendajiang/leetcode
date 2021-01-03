@@ -70,9 +70,7 @@ class Solution {
 public:
     struct node {
         int ch[2];
-        int flag;
         node() {
-            flag = -1;
             memset(ch, 0, sizeof(ch));
         }
     };
@@ -82,31 +80,34 @@ public:
     int findMaximumXOR(vector<int>& nums) {
         tree.emplace_back(node());
         int add = 0;
+        int maxxor = 0;
+        int ans = 0;
+        int peek = 0;
         for (int i = 0; i < nums.size(); i++) {
-            int add = 0;
+            add = 0;
+            ans = 0;
+            peek = 0;
             for (int j = 30; j >= 0; j--) {
+                ans <<= 1;
                 int tmp = (nums[i] >> j) & 0x1;
                 if (!tree[add].ch[tmp]) {
                     tree.emplace_back(node());
                     tree[add].ch[tmp] = tree.size() - 1;
                 }
                 add = tree[add].ch[tmp];
+
+                if (tree[peek].ch[1 - tmp]) {
+                    peek = tree[peek].ch[1 - tmp];
+                    ans += 1;
+                }
+                else {
+                    peek = tree[peek].ch[tmp];
+                }
+                
             }
-            tree[add].flag = nums[i];
+            maxxor = max(maxxor, ans);
         }
 
-        int maxxor = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            add = 0;
-            for (int j = 30; j >= 0; j--) {
-                int tmp = (nums[i] >> j) & 0x1;
-                if (tree[add].ch[1 - tmp]) add = tree[add].ch[1 - tmp];
-                else add = tree[add].ch[tmp];
-            }
-            if (tree[add].flag != -1) {
-                maxxor = max(maxxor, tree[add].flag ^ nums[i]);
-            }
-        }
         return maxxor;
     }
 };
