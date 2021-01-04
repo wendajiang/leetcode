@@ -1,3 +1,8 @@
+/**
+ * @lc app=leetcode id=1 lang=cpp
+ * 
+ */
+// @lc leetcode=start
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -17,6 +22,5 @@ public:
         }
         return result;
     }
-
-
 };
+// @lc leetcode=end
