@@ -111,9 +111,13 @@ public:
         }
     }
 
-    // @todo
     void clear(TrieNode* node) {
-        
+        if (!node) return;
+        for (int i = 0; i < 26; i++) {
+            if (node->children[i]) clear(node->children[i]);
+        }
+        delete node;
+        node = nullptr;
     }
 private:
     TrieNode *root;
