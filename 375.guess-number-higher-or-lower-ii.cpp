@@ -95,6 +95,7 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
+    // @todo  学习
     int getMoneyAmount(int n) {
         vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
         for (int i = 2; i <= n; ++i) {
