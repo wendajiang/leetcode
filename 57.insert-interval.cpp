@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/insert-interval/description/
  *
  * algorithms
- * Medium (34.75%)
- * Likes:    2446
+ * Medium (34.76%)
+ * Likes:    2445
  * Dislikes: 228
- * Total Accepted:    315.1K
- * Total Submissions: 906.3K
+ * Total Accepted:    315K
+ * Total Submissions: 906.2K
  * Testcase Example:  '[[1,3],[6,9]]\n[2,5]'
  *
  * Given a set of non-overlapping intervals, insert a new interval into the
@@ -69,28 +69,28 @@
  * 
  * 
  */
-
 #include <bits/stdc++.h>
 using namespace std;
-
 // @lc code=start
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         vector<vector<int>> res;
-        int n = intervals.size(), cur = 0;
-        while (cur < n && intervals[cur][1] < newInterval[0]) {
-            res.push_back(intervals[cur++]);
+        int cur = 0;
+        while (cur < intervals.size() && newInterval[0] > intervals[cur][1]) {
+            res.push_back(intervals[cur]);
+            cur++;
         }
-        while (cur < n && intervals[cur][0] <= newInterval[1]) {
+        while (cur < intervals.size() && newInterval[1] >= intervals[cur][0]) {
             newInterval[0] = min(newInterval[0], intervals[cur][0]);
             newInterval[1] = max(newInterval[1], intervals[cur][1]);
-            ++cur;
+            cur++;
         }
         res.push_back(newInterval);
-        while (cur < n) {
+        while(cur < intervals.size()) {
             res.push_back(intervals[cur++]);
         }
+
         return res;
     }
 };
