@@ -88,13 +88,18 @@ public:
     TreeNode* bstToGst(TreeNode* root) {
         if (nullptr == root) return root;
         orderTravel(root);
+        for (int i = 1; i < _vec_p.size(); i++) {
+            _vec_p[i]->val += _vec_p[i - 1]->val;
+        }
         return root;
     }
 
-    int orderTravel(TreeNode* node) {
-        if (node->right) node->val += orderTravel(node->right);
-        return node->val;
-        if (node->left) node->val += orderTravel(node->left);
+    void orderTravel(TreeNode* node) {
+        if (node->right) orderTravel(node->right);
+        _vec_p.push_back(node);
+        if (node->left) orderTravel(node->left);
     }
+private:
+    std::vector<TreeNode*> _vec_p;
 };
 // @lc code=end
