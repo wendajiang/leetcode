@@ -76,28 +76,34 @@ public:
 
 class Solution {
 public:
-    // vector<int> preorder(Node* root) {
-        // vector<int> ans;
-        // stack<Node*> st;
-        // st.push(root);
-        // while(!st.empty()) {
-
-
-        // }
-    // }
     vector<int> preorder(Node* root) {
         vector<int> ans;
         if (!root) return ans;
-        preorderCore(root, ans);
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()) {
+            Node *tmp = st.top();st.pop();
+            for (int i = tmp->children.size() - 1; i >= 0; i--) {
+                st.push(tmp->children[i]);
+            }
+            ans.push_back(tmp->val);
+
+        }
         return ans;
     }
+    // vector<int> preorder(Node* root) {
+        // vector<int> ans;
+        // if (!root) return ans;
+        // preorderCore(root, ans);
+        // return ans;
+    // }
 
-private:
-    void preorderCore(Node* node, vector<int> &ans) {
-        ans.push_back(node->val);
-        for (auto n : node->children) {
-            preorderCore(n, ans);
-        }
-    }
+// private:
+    // void preorderCore(Node* node, vector<int> &ans) {
+        // ans.push_back(node->val);
+        // for (auto n : node->children) {
+            // preorderCore(n, ans);
+        // }
+    // }
 };
 // @lc code=end

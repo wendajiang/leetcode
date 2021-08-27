@@ -75,18 +75,32 @@ public:
     vector<int> postorder(Node* root) {
         vector<int> ans;
         if (!root) return ans;
-        postorderCore(root, ans);
-        return ans;
-    }
-private:
-    void postorderCore(Node* node, vector<int> &ans) {
-        if (!node) {
-            return;
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()) {
+            Node *tmp = st.top(); st.pop();
+            for (auto n : tmp->children) {
+                st.push(n);
+            }
+            ans.push_back(tmp->val);
         }
-        for (auto n : node->children) {
-            postorderCore(n, ans);
-        }
-        ans.push_back(node->val);
+        return vector<int>{ans.rbegin(), ans.rend()};
     }
+    // vector<int> postorder(Node* root) {
+        // vector<int> ans;
+        // if (!root) return ans;
+        // postorderCore(root, ans);
+        // return ans;
+    // }
+// private:
+    // void postorderCore(Node* node, vector<int> &ans) {
+        // if (!node) {
+            // return;
+        // }
+        // for (auto n : node->children) {
+            // postorderCore(n, ans);
+        // }
+        // ans.push_back(node->val);
+    // }
 };
 // @lc code=end
