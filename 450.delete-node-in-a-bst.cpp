@@ -1,4 +1,4 @@
-++++++++++++++++++++++++++++++++/*
+/*
  * @lc app=leetcode id=450 lang=cpp
  *
  * [450] Delete Node in a BST
@@ -109,7 +109,7 @@ public:
     }
 
 private:
-    void findNode(TreeNode *p_node, TreeNode *node, int key, TreeNode *find, TreeNode* p_find) {
+    void findNode(TreeNode *p_node, TreeNode *node, int key, TreeNode *&find, TreeNode *&p_find) {
         if (node->val == key) {
             p_find = p_node;
             find = node;
@@ -119,15 +119,12 @@ private:
         else if (node->val < key && node->right) findNode(node, node->right, key, find, p_find);
     }
 
-    void transplant(TreeNode *root, TreeNode *u, TreeNode *u_p, TreeNode *v, TreeNode *v_p) {
+    void transplant(TreeNode *&root, TreeNode *&u, TreeNode *&u_p, TreeNode *&v, TreeNode *&v_p) {
         if (u_p == nullptr) root = v;
         else if (u == u_p->left) u_p->left = v;
         else u_p->right = v;
-
-        if (v == nullptr) v_p = u_p;
-
     }
-    void findMini(TreeNode *p_node, TreeNode *node, TreeNode *f, TreeNode *p_f) {
+    void findMini(TreeNode *p_node, TreeNode *node, TreeNode *&f, TreeNode *&p_f) {
         if (node->left == nullptr) {
             f = node;
             p_f = p_node;
