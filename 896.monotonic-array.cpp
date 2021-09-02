@@ -51,24 +51,34 @@
 
 // @lc code=start
 class Solution {
-public:
-    bool isMonotonic(vector<int>& nums) {
-        if (nums.size() == 0 || nums.size() == 1) return true;
+   public:
+    // bool isMonotonic(vector<int>& nums) {
+        // if (nums.size() == 0 || nums.size() == 1) return true;
 
-        int s = 1;
-        while(s < nums.size() && nums[s - 1] == nums[s]) s++;
+        // int s = 1;
+        // while (s < nums.size() && nums[s - 1] == nums[s]) s++;
 
-        if (s == nums.size()) return true;
+        // if (s == nums.size()) return true;
 
-        if (nums[s] > nums[s - 1]) {
-            for (; s < nums.size(); s++) {
-                if (nums[s] < nums[s - 1]) return false;
-            }
+        // if (nums[s] > nums[s - 1]) {
+            // for (; s < nums.size(); s++) {
+                // if (nums[s] < nums[s - 1]) return false;
+            // }
 
-        } else {
-            for (; s < nums.size(); s++) {
-                if (nums[s] > nums[s - 1]) return false;
-            }
+        // } else {
+            // for (; s < nums.size(); s++) {
+                // if (nums[s] > nums[s - 1]) return false;
+            // }
+        // }
+        // return true;
+    // }
+
+    bool isMonotonic(vector<int>& A) {
+        bool inc = true, dec = true;
+        for (int i = 1; i < A.size(); ++i) {
+            inc &= (A[i - 1] <= A[i]);
+            dec &= (A[i - 1] >= A[i]);
+            if (!inc && !dec) return false;
         }
         return true;
     }
