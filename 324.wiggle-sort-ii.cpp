@@ -76,7 +76,6 @@ private:
         }
     }
 
-
     int partition(vector<int> &nums, int l, int r) {
         int privot = nums[l];
         int s = l + 1;
@@ -89,7 +88,5 @@ private:
         swap(nums[l], nums[e]);
         return e;
     }
-
-
 };
 // @lc code=end
