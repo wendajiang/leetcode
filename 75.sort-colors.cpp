@@ -37,32 +37,26 @@
  *
  *
  */
+
+// https://en.wikipedia.org/wiki/Dutch_national_flag_problem#Pseudocode
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        int i2 = nums.size();
-        int i0 = -1;
-        int i1 = 0;
-        while(i1 < i2){
-            while(nums[i0 + 1] == 0) i0 ++;
-            while(nums[i2 - 1] == 2) i2 --;
-            i1 = i0 + 1;
-            while(nums[i1] == 1) i1 ++;
-            if(i1 >= i2) break;
-            if(nums[i1] == 0){
-                // swap(nums[++i0], nums[i1]);
-                int tmp = nums[i1];
-                nums[i1] = nums[++i0];
-                nums[i0] = tmp;
-
-            }
-            if(nums[i1] == 2){
-                // swap(nums[--i2], nums[i1]);
-                int tmp = nums[i1];
-                nums[i1] = nums[--i2];
-                nums[i2] = tmp;
+        int mid = 1;
+        int i = 0, j = 0;
+        int k = nums.size() - 1;
+        while(j <= k) {
+            if (nums[j] < mid) {
+                swap(nums[i], nums[j]);
+                i++; j++;
+            } else if (nums[j] > mid) {
+                swap(nums[j], nums[k]);
+                k--;
+            } else {
+                j++;
             }
         }
+
     }
 
     // void sortColors(vector<int>& A) {
@@ -74,5 +68,4 @@ public:
     //             swap(A[i--], A[k--]);
     //     }
     // }
-
 };
