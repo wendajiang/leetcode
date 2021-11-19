@@ -56,3 +56,4 @@ all.json
 cmake-build-debug/**
 build/**
 .cache/**
+**/target
