@@ -30,7 +30,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust"
+name = "rust_lt"
 version = "0.1.0"
 dependencies = [
  "automod",
