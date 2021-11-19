@@ -34,7 +34,14 @@ name = "rust"
 version = "0.1.0"
 dependencies = [
  "automod",
+ "rustgym-util",
 ]
+
+[[package]]
+name = "rustgym-util"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5c8a8f5ba6923cfbdf16a942af93b4fbe277cce212eef52a58c676f4e8ba44ba"
 
 [[package]]
 name = "syn"

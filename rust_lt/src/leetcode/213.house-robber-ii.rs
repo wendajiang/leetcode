@@ -65,22 +65,23 @@ impl Solution {
         match nums.len() {
             0 => 0,
             1 => nums[0],
-            _ => rob_core(&nums, 0, nums.len() - 1).max(rob_core(&nums, 1, nums.len())),
+            _ => Solution::rob_core(&nums, 0, nums.len() - 1).max(Solution::rob_core(&nums, 1, nums.len())),
         }
+    }
+
+    fn rob_core(nums: &Vec<i32>, l: usize, r: usize) -> i32 {
+        let mut rob = 0;
+        let mut not_rob = 0;
+        for i in l..r {
+            let pre_rob = rob;
+            let pre_not_rob = not_rob;
+            rob = pre_not_rob + nums[i];
+            not_rob = pre_rob.max(pre_not_rob);
+        }
+        rob.max(not_rob)
     }
 }
 
-fn rob_core(nums: &Vec<i32>, l: usize, r: usize) -> i32 {
-    let mut rob = 0;
-    let mut not_rob = 0;
-    for i in l..r {
-        let pre_rob = rob;
-        let pre_not_rob = not_rob;
-        rob = pre_not_rob + nums[i];
-        not_rob = pre_rob.max(pre_not_rob);
-    }
-    rob.max(not_rob)
-}
 // @lc code=end
 struct Solution;
 

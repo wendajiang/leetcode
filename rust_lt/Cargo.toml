@@ -1,5 +1,5 @@
 [package]
-name = "rust"
+name = "rust_lt"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 automod = {path = "automod"}
+rustgym-util = "0.2"
