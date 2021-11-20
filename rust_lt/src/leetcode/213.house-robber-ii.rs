@@ -85,7 +85,7 @@ impl Solution {
 // @lc code=end
 struct Solution;
 
-
+#[cfg(test)]
 #[test]
 fn test_rob() {
     assert_eq!(Solution::rob(vec![1,2,3,1]), 4);

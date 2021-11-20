@@ -78,6 +78,7 @@ impl Solution {
 
 struct Solution;
 
+#[cfg(test)]
 #[test]
 fn test() {
     assert_eq!(Solution::delete_and_earn(vec![2,2,3,3,3,4]), 9);

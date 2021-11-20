@@ -136,6 +136,7 @@ pub trait TreeMaker {
 
 impl TreeMaker for TreeLink {}
 
+#[cfg(test)]
 #[test]
 fn test_236() {
 
