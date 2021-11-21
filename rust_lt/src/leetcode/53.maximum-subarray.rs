@@ -72,15 +72,11 @@ impl Solution {
         let mut sum = 0;
         let mut max_sum = nums[0];
         for num in nums {
-            if sum < 0 {
-                sum = num;
+            match sum < 0 {
+                true => sum = num,
+                false => sum += num,
             }
-            else {
-                sum += num;
-            }
-            if sum > max_sum {
-                max_sum = sum;
-            }
+            max_sum = max_sum.max(sum);
         }
         return max_sum;
     }
