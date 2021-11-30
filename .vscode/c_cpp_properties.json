@@ -3,7 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
-                "/usr/local/opt/gcc/include/c++/10.2.0"
+                "/opt/homebrew/opt/gcc/include"
             ],
             "defines": [],
             "macFrameworkPath": [
@@ -12,7 +12,7 @@
             "cStandard": "c17",
             "cppStandard": "c++14",
             "intelliSenseMode": "gcc-x64",
-            "compilerPath": "/usr/local/opt/gcc/bin/g++-10"
+            "compilerPath": "/opt/homebrew/bin/g++-11"
         }
     ],
     "version": 4
