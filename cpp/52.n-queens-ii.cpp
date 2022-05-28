@@ -44,22 +44,24 @@
  *
  *
  */
+#include <bits/stdc++.h>
+using namespace std;
 
 // @lc code=start
 class Solution {
-public:
+   public:
     int totalNQueens(int n) {
         cols = vector<bool>(n, 0);
         diag1 = vector<bool>(2 * n - 1, 0);
         diag2 = vector<bool>(2 * n - 1, 0);
 
         ans = 0;
-        nqueens(0, n);
+        nQueens(0, n);
 
         return ans;
     }
 
-private:
+   private:
     vector<bool> cols;
     vector<bool> diag1;
     vector<bool> diag2;
@@ -75,8 +77,7 @@ private:
         diag2[x - y + n - 1] = is_put;
     }
 
-
-    void nqueens(int y, int n) {
+    void nQueens(int y, int n) {
         if (y == n) {
             ans += 1;
             return;
@@ -85,7 +86,7 @@ private:
         for (int x = 0; x < n; x++) {
             if (!available(x, y, n)) continue;
             updateBoard(x, y, n, true);
-            nqueens(y + 1, n);
+            nQueens(y + 1, n);
             updateBoard(x, y, n, false);
         }
     }
