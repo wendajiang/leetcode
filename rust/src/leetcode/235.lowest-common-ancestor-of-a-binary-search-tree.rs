@@ -137,29 +137,41 @@ pub trait TreeMaker {
 impl TreeMaker for TreeLink {}
 
 #[cfg(test)]
-#[test]
-fn test() {
-    let root = tree_node!(
-        6,
-        tree_node!(2, tree_node!(0), tree_node!(4, tree_node!(3), tree_node!(5))),
-        tree_node!(8, tree_node!(7), tree_node!(9))
-    );
-    let p = tree_node!(2);
-    let q = tree_node!(8);
-    let res = tree_node!(6);
-    assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
-    let root = tree_node!(
-        6,
-        tree_node!(2, tree_node!(0), tree_node!(4, tree_node!(3), tree_node!(5))),
-        tree_node!(8, tree_node!(7), tree_node!(9))
-    );
-    let p = tree_node!(2);
-    let q = tree_node!(4);
-    let res = tree_node!(2);
-    assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
-    let root = tree_node!(2, tree_node!(1), None);
-    let p = tree_node!(2);
-    let q = tree_node!(1);
-    let res = tree_node!(2);
-    assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test() {
+        let root = tree_node!(
+            6,
+            tree_node!(
+                2,
+                tree_node!(0),
+                tree_node!(4, tree_node!(3), tree_node!(5))
+            ),
+            tree_node!(8, tree_node!(7), tree_node!(9))
+        );
+        let p = tree_node!(2);
+        let q = tree_node!(8);
+        let res = tree_node!(6);
+        assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
+        let root = tree_node!(
+            6,
+            tree_node!(
+                2,
+                tree_node!(0),
+                tree_node!(4, tree_node!(3), tree_node!(5))
+            ),
+            tree_node!(8, tree_node!(7), tree_node!(9))
+        );
+        let p = tree_node!(2);
+        let q = tree_node!(4);
+        let res = tree_node!(2);
+        assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
+        let root = tree_node!(2, tree_node!(1), None);
+        let p = tree_node!(2);
+        let q = tree_node!(1);
+        let res = tree_node!(2);
+        assert_eq!(Solution::lowest_common_ancestor(root, p, q), res);
+    }
 }

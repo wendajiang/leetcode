@@ -1,104 +1,147 @@
 /*
+ * @lc app=leetcode id=133 lang=cpp
+ *
  * [133] Clone Graph
  *
  * https://leetcode.com/problems/clone-graph/description/
  *
  * algorithms
- * Medium (25.18%)
- * Total Accepted:    148.7K
- * Total Submissions: 590.7K
- * Testcase Example:  '{}'
+ * Medium (43.59%)
+ * Likes:    5763
+ * Dislikes: 2533
+ * Total Accepted:    729.1K
+ * Total Submissions: 1.5M
+ * Testcase Example:  '[[2,4],[1,3],[2,4],[1,3]]'
+ *
+ * Given a reference of a node in a connected undirected graph.
+ *
+ * Return a deep copy (clone) of the graph.
+ *
+ * Each node in the graph contains a value (int) and a list (List[Node]) of its
+ * neighbors.
  *
  *
- * Clone an undirected graph. Each node in the graph contains a label and a
- * list of its neighbors.
- *
- *
- *
- *
- * OJ's undirected graph serialization:
- *
- *
- * Nodes are labeled uniquely.
- *
- *
- * We use # as a separator for each node, and , as a separator for node label
- * and each neighbor of the node.
- *
- *
- *
- *
- * As an example, consider the serialized graph {0,1,2#1,2#2,2}.
- *
- *
- *
- * The graph has a total of three nodes, and therefore contains three parts as
- * separated by #.
- *
- * First node is labeled as 0. Connect node 0 to both nodes 1 and 2.
- * Second node is labeled as 1. Connect node 1 to node 2.
- * Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming
- * a self-cycle.
+ * class Node {
+ * ⁠   public int val;
+ * ⁠   public List<Node> neighbors;
+ * }
  *
  *
  *
  *
- * Visually, the graph looks like the following:
+ * Test case format:
  *
- * ⁠      1
- * ⁠     / \
- * ⁠    /   \
- * ⁠   0 --- 2
- * ⁠        / \
- * ⁠        \_/
+ * For simplicity, each node's value is the same as the node's index
+ * (1-indexed). For example, the first node with val == 1, the second node with
+ * val == 2, and so on. The graph is represented in the test case using an
+ * adjacency list.
+ *
+ * An adjacency list is a collection of unordered lists used to represent a
+ * finite graph. Each list describes the set of neighbors of a node in the
+ * graph.
+ *
+ * The given node will always be the first node with val = 1. You must return
+ * the copy of the given node as a reference to the cloned graph.
  *
  *
+ * Example 1:
+ *
+ *
+ * Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
+ * Output: [[2,4],[1,3],[2,4],[1,3]]
+ * Explanation: There are 4 nodes in the graph.
+ * 1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val =
+ * 4).
+ * 2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val =
+ * 3).
+ * 3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val =
+ * 4).
+ * 4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val =
+ * 3).
+ *
+ *
+ * Example 2:
+ *
+ *
+ * Input: adjList = [[]]
+ * Output: [[]]
+ * Explanation: Note that the input contains one empty list. The graph consists
+ * of only one node with val = 1 and it does not have any neighbors.
+ *
+ *
+ * Example 3:
+ *
+ *
+ * Input: adjList = []
+ * Output: []
+ * Explanation: This an empty graph, it does not have any nodes.
+ *
+ *
+ *
+ * Constraints:
+ *
+ *
+ * The number of nodes in the graph is in the range [0, 100].
+ * 1 <= Node.val <= 100
+ * Node.val is unique for each node.
+ * There are no repeated edges and no self-loops in the graph.
+ * The Graph is connected and all nodes can be visited starting from the given
+ * node.
  *
  *
  */
-/**
- * Definition for undirected graph.
- * struct UndirectedGraphNode {
- *     int label;
- *     vector<UndirectedGraphNode *> neighbors;
- *     UndirectedGraphNode(int x) : label(x) {};
- * };
- */
-class Solution {
-public:
-    unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> mp;
 
+#include <bits/stdc++.h>
+using namespace std;
 
-    // //DFS
-    // UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-    //     if(!node) return NULL;
-    //     if(mp.find(node) == mp.end()){
-    //         mp[node] = new UndirectedGraphNode(node->label);
-    //         for(auto neigh : node->neighbors){
-    //             mp[node]->neighbors.push_back(cloneGraph(neigh));
-    //         }
-    //     }
-    //     return mp[node];
-    // }
-
-    //BFS
-    UndirectedGraphNode* cloneGraph(UndirectedGraphNode* node){
-        if(!node) return NULL;
-        UndirectedGraphNode* copy = new UndirectedGraphNode(node->label);
-        mp[node] = copy;
-        queue<UndirectedGraphNode*> Q;
-        Q.push(node);
-        while(!Q.empty()){
-            UndirectedGraphNode* cur = Q.front(); Q.pop();
-            for(auto neigh : cur->neighbors){
-                if(mp.find(neigh) == mp.end()){
-                    UndirectedGraphNode* neigh_copy = new UndirectedGraphNode(neigh->label);
-                    mp[neigh] = neigh_copy;
-                    Q.push(neigh);
-                }
-                mp[cur]->neighbors.push_back(mp[neigh]);
-            }
-        }
-        return copy;
+// Definition for a Node.
+class Node {
+   public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
     }
 };
+
+// @lc code=start
+
+class Solution {
+   public:
+    Node* cloneGraph(Node* node) {
+        if (node == nullptr) {
+            return nullptr;
+        }
+
+        std::unordered_map<int, Node*> node_mp;
+        Node* new_node = new Node(node->val);
+        node_mp[new_node->val] = new_node;
+        travel_and_new(node_mp, node, new_node);
+        return new_node;
+    }
+
+   private:
+    void travel_and_new(std::unordered_map<int, Node*>& mp, Node* node,
+                        Node* new_node) {
+        for (auto nei : node->neighbors) {
+            if (mp.count(nei->val)) {
+                new_node->neighbors.push_back(mp[nei->val]);
+            } else {
+                Node* tmp = new Node(nei->val);
+                mp[tmp->val] = tmp;
+                travel_and_new(mp, nei, tmp);
+                new_node->neighbors.push_back(tmp);
+            }
+        }
+    }
+};
+// @lc code=end
