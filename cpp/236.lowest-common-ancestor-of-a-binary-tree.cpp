@@ -35,30 +35,34 @@
  * example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of
  * itself according to the LCA definition.
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// @lc code=start
 class Solution {
-public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
-        if(root == p || root == q || root == NULL) return root;
+   public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root == p || root == q || root == nullptr) return root;
         TreeNode* parent1 = lowestCommonAncestor(root->left, p, q);
         TreeNode* parent2 = lowestCommonAncestor(root->right, p, q);
-        if(parent1 && parent2){
+        if (parent1 && parent2) {
             return root;
-        }else{
+        } else {
             return parent1 ? parent1 : parent2;
         }
     }
 
-
-    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    // {
     //     if(aIsRootOfB(p, q)){
     //         return p;
     //     }else if(aIsRootOfB(q, p)){
@@ -81,7 +85,8 @@ public:
     //     return aIsRootOfB(a->left,  b) || aIsRootOfB(a->right, b);
     // }
     //
-    // void findPath(TreeNode* a, TreeNode* b, vector<TreeNode*> path, vector<TreeNode*>& res){
+    // void findPath(TreeNode* a, TreeNode* b, vector<TreeNode*> path,
+    // vector<TreeNode*>& res){
     //     path.push_back(a);
     //     if(a == b){
     //         res = path;
@@ -96,3 +101,4 @@ public:
     //
     // }
 };
+// @lc code=end
