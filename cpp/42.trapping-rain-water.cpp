@@ -44,27 +44,29 @@
  *
  *
  */
-
+#include <bits/stdc++.h>
+using namespace std;
 // @lc code=start
 class Solution {
-public:
+   public:
     int trap(vector<int>& height) {
-        if (height.empty()) return 0;
-        int l = 0, r = height.size() - 1;
-
-        int max_l = height[l];
-        int max_r = height[r];
-        int ans = 0;
-        while(l < r) {
-            if (max_l < max_r) {
-                ans += max_l - height[l];
-                max_l = max(max_l, height[++l]);
+        if (height.size() == 0) return 0;
+        int l = 0;
+        int r = height.size() - 1;
+        int level = 0;
+        int res = 0;
+        while (l < r) {
+            if (height[l] < height[r]) {
+                level = max(level, height[l]);
+                res += level - height[l];
+                l++;
             } else {
-                ans += max_r - height[r];
-                max_r = max(max_r, height[--r]);
+                level = max(level, height[r]);
+                res += level - height[r];
+                r--;
             }
         }
-        return ans;
+        return res;
     }
 };
 // @lc code=end
