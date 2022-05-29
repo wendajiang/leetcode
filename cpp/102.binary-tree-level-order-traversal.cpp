@@ -33,36 +33,40 @@
  *
  *
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// @lc code=start
 class Solution {
-public:
+   public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        if(root == nullptr) return {};
+        if (root == nullptr) return {};
         vector<vector<int>> res;
         vector<int> solution;
-        queue<TreeNode *> Q;
+        queue<TreeNode*> Q;
         Q.push(root);
-        while(!Q.empty()){
+        while (!Q.empty()) {
             int count = Q.size();
-            while(count){
+            while (count) {
                 TreeNode* tmp = Q.front();
                 Q.pop();
                 solution.push_back(tmp->val);
-                if(tmp->left) Q.push(tmp->left);
-                if(tmp->right) Q.push(tmp->right);
+                if (tmp->left) Q.push(tmp->left);
+                if (tmp->right) Q.push(tmp->right);
                 count--;
             }
             res.push_back(solution);
-            solution.erase(solution.begin(), solution.end());
+            solution.clear();
         }
         return res;
     }
 };
+// @lc code=end
