@@ -27,35 +27,38 @@
  *
  * Note: Recursive solution is trivial, could you do it iteratively?
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// @lc code=start
 class Solution {
-public:
-    //Morris Traversal
+   public:
+    // Morris Traversal
     vector<int> inorderTraversal(TreeNode* root) {
         TreeNode *cur = root, *pre = NULL;
         vector<int> res;
-        while(cur){
-            if(cur->left){
+        while (cur) {
+            if (cur->left) {
                 pre = cur->left;
-                while((pre->right) && (pre->right != cur))
-                    pre = pre->right;
-                if(!(pre->right)){
+                while ((pre->right) && (pre->right != cur)) pre = pre->right;
+                if (!(pre->right)) {
                     pre->right = cur;
                     cur = cur->left;
-                }else {
+                } else {
                     pre->right = NULL;
                     res.push_back(cur->val);
                     cur = cur->right;
                 }
-            }else{
+            } else {
                 res.push_back(cur->val);
                 cur = cur->right;
             }
@@ -70,27 +73,15 @@ public:
     //     while (curNode || !toVisit.empty()) {
     //         if (curNode) {
     //             toVisit.push(curNode);
-    //             curNode = curNode -> left;
-    //         }
-    //         else {
+    //             curNode = curNode->left;
+    //         } else {
     //             curNode = toVisit.top();
     //             toVisit.pop();
-    //             nodes.push_back(curNode -> val);
-    //             curNode = curNode -> right;
+    //             nodes.push_back(curNode->val);
+    //             curNode = curNode->right;
     //         }
     //     }
     //     return nodes;
-    //
-    //     ////recurse methoed
-    //     // if(root == NULL) return {}:
-    //     // vector<int> res;
-    //     // iTraversal(root, res);
-    //     // return res;
-    // }
-    // void iTraversal(TreeNode* node, vector<int>& res){
-    //     // if(node == NULL) return;
-    //     if(node->left) iTraversal(node->left, res);
-    //     res.push_back(node->val);
-    //     if(node->right) iTraversal(node->right, res);
     // }
 };
+// @lc code=end
