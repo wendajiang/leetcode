@@ -1,66 +1,85 @@
 /*
+ * @lc app=leetcode id=530 lang=cpp
+ *
  * [530] Minimum Absolute Difference in BST
  *
- * https://leetcode.com/problems/minimum-absolute-difference-in-bst
+ * https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/
  *
- * Easy (47.00%)
- * Total Accepted:
- * Total Submissions:
- * Testcase Example:  '[1,null,3,2]'
+ * algorithms
+ * Easy (55.74%)
+ * Likes:    2070
+ * Dislikes: 119
+ * Total Accepted:    159K
+ * Total Submissions: 282.4K
+ * Testcase Example:  '[4,2,6,1,3]'
  *
- * Given a binary search tree with non-negative values, find the minimum
- * absolute difference between values of any two nodes.
+ * Given the root of a Binary Search Tree (BST), return the minimum absolute
+ * difference between the values of any two different nodes in the tree.
  *
  *
- * Example:
+ * Example 1:
  *
- * Input:
  *
- * ⁠  1
- * ⁠   \
- * ⁠    3
- * ⁠   /
- * ⁠  2
+ * Input: root = [4,2,6,1,3]
+ * Output: 1
  *
- * Output:
- * 1
  *
- * Explanation:
- * The minimum absolute difference is 1, which is the difference between 2 and
- * 1 (or between 2 and 3).
+ * Example 2:
  *
+ *
+ * Input: root = [1,0,48,null,null,12,49]
+ * Output: 1
  *
  *
  *
- * Note:
- * There are at least two nodes in this BST.
+ * Constraints:
+ *
+ *
+ * The number of nodes in the tree is in the range [2, 10^4].
+ * 0 <= Node.val <= 10^5
+ *
+ *
+ *
+ * Note: This question is the same as 783:
+ * https://leetcode.com/problems/minimum-distance-between-bst-nodes/
  *
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+#include <bits/stdc++.h>
+using namespace std;
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right)
+        : val(x), left(left), right(right) {}
+};
+
+// @lc code=start
+
 class Solution {
-public:
-    int getMinimumDifference(TreeNode* root) {
-        int minV = INT_MAX;
-        TreeNode* pre = nullptr;
-        inorderTraversal(root, pre, minV);
-        return minV;
-    }
-    void inorderTraversal(TreeNode* node, TreeNode*& pre, int &minV){
-        if(!node)return;
-        inorderTraversal(node->left, pre, minV);
-        if(pre && node->val - pre->val < minV){
-            minV = node->val - pre->val;
-        }
-        pre = node;
-        inorderTraversal(node->right, pre, minV);
+   public:
+    int getMinimumDifference(TreeNode *root) {
+        prev = nullptr;
+        res = INT_MAX;
+        inorder(root);
+        return res;
     }
 
+    void inorder(TreeNode *node) {
+        if (!node) return;
+        inorder(node->left);
+        if (prev) {
+            res = min(abs(prev->val - node->val), res);
+        }
+        prev = node;
+        inorder(node->right);
+    }
+
+   private:
+    TreeNode *prev;
+    int res;
 };
+// @lc code=end
