@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/middle-of-the-linked-list/description/
  *
  * algorithms
- * Easy (70.42%)
- * Likes:    3435
- * Dislikes: 92
- * Total Accepted:    420.4K
- * Total Submissions: 596.2K
+ * Easy (70.73%)
+ * Likes:    5450
+ * Dislikes: 136
+ * Total Accepted:    674.1K
+ * Total Submissions: 926.4K
  * Testcase Example:  '[1,2,3,4,5]'
  *
  * Given the head of a singly linked list, return the middle node of the linked
@@ -46,28 +46,28 @@
  *
  */
 
+#include <bits/stdc++.h>
+using namespace std;
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
 // @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+
 class Solution {
-public:
+   public:
     ListNode* middleNode(ListNode* head) {
-        if (nullptr == head) return head;
-        ListNode* first = head;
-        ListNode* second = head;
-        while(second && second->next) {
-            first = first->next;
-            second = second->next->next;
+        ListNode *slow = head, *fast = head;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        return first;
+        return slow;
     }
 };
 // @lc code=end
