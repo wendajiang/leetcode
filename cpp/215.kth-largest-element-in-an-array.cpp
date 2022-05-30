@@ -1,56 +1,71 @@
 /*
+ * @lc app=leetcode id=215 lang=cpp
+ *
  * [215] Kth Largest Element in an Array
  *
- * https://leetcode.com/problems/kth-largest-element-in-an-array
+ * https://leetcode.com/problems/kth-largest-element-in-an-array/description/
  *
- * Medium (38.96%)
- * Total Accepted:
- * Total Submissions:
- * Testcase Example:  '[1]\n1'
+ * algorithms
+ * Medium (61.49%)
+ * Likes:    9313
+ * Dislikes: 493
+ * Total Accepted:    1.3M
+ * Total Submissions: 2.1M
+ * Testcase Example:  '[3,2,1,5,6,4]\n2'
  *
- * Find the kth largest element in an unsorted array. Note that it is the kth
- * largest element in the sorted order, not the kth distinct element.
+ * Given an integer array nums and an integer k, return the k^th largest
+ * element in the array.
  *
- * For example,
- * Given [3,2,1,5,6,4] and k = 2, return 5.
+ * Note that it is the k^th largest element in the sorted order, not the k^th
+ * distinct element.
  *
  *
- * Note:
- * You may assume k is always valid, 1 ? k ? array's length.
+ * Example 1:
+ * Input: nums = [3,2,1,5,6,4], k = 2
+ * Output: 5
+ * Example 2:
+ * Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+ * Output: 4
  *
- * Credits:Special thanks to @mithmatt for adding this problem and creating all
- * test cases.
+ *
+ * Constraints:
+ *
+ *
+ * 1 <= k <= nums.length <= 10^4
+ * -10^4 <= nums[i] <= 10^4
+ *
+ *
  */
+#include <bits/stdc++.h>
+using namespace std;
+// @lc code=start
 class Solution {
-public:
+   public:
     int findKthLargest(vector<int>& nums, int k) {
-        return findKthLargest(nums, 0, nums.size() - 1, k);
-    }
-    int findKthLargest(vector<int>& nums, int start, int end, int k){
-        if(start == end) return nums[start];
-        int q = partition(nums, start, end);
-        int interval = end - q + 1;
-        if(interval == k)
-            return nums[q];
-        if(interval > k){
-            return findKthLargest(nums, q + 1, end, k);
-        }else{
-            return findKthLargest(nums, start, q - 1, k - interval);
+        int l = 0, r = nums.size() - 1;
+        while (true) {
+            int pos = partition(nums, l, r);
+            if (pos == k - 1) return nums[pos];
+            if (pos > k - 1)
+                r = pos - 1;
+            else
+                l = pos + 1;
         }
     }
-    int partition(vector<int>& nums, int start, int end){
-        int x = nums[end];
-        int i = start - 1;
-        for(int j = start; j < end; j++){
-            if(nums[j] <= x){
-                i++;
-                int tmp = nums[j];
-                nums[j] = nums[i];
-                nums[i] = tmp;
+
+    int partition(vector<int>& nums, int l, int r) {
+        int pivot = nums[l];
+        int left = l;
+        l = l + 1;
+        while (l <= r) {
+            if (nums[l] < pivot && nums[r] > pivot) {
+                swap(nums[l++], nums[r--]);
             }
+            if (nums[l] >= pivot) ++l;
+            if (nums[r] <= pivot) --r;
         }
-        nums[end] = nums[++i];
-        nums[i] = x;
-        return i;
+        swap(nums[left], nums[r]);
+        return r;
     }
 };
+// @lc code=end
