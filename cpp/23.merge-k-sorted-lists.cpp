@@ -1,56 +1,113 @@
 /*
+ * @lc app=leetcode id=23 lang=cpp
+ *
  * [23] Merge k Sorted Lists
  *
- * https://leetcode.com/problems/merge-k-sorted-lists
+ * https://leetcode.com/problems/merge-k-sorted-lists/description/
  *
- * Hard (26.99%)
- * Total Accepted:
- * Total Submissions:
- * Testcase Example:  '[]'
+ * algorithms
+ * Hard (45.08%)
+ * Likes:    12310
+ * Dislikes: 478
+ * Total Accepted:    1.3M
+ * Total Submissions: 2.7M
+ * Testcase Example:  '[[1,4,5],[1,3,4],[2,6]]'
+ *
+ * You are given an array of k linked-lists lists, each linked-list is sorted
+ * in ascending order.
+ *
+ * Merge all the linked-lists into one sorted linked-list and return it.
  *
  *
- * Merge k sorted linked lists and return it as one sorted list. Analyze and
- * describe its complexity.
+ * Example 1:
+ *
+ *
+ * Input: lists = [[1,4,5],[1,3,4],[2,6]]
+ * Output: [1,1,2,3,4,4,5,6]
+ * Explanation: The linked-lists are:
+ * [
+ * ⁠ 1->4->5,
+ * ⁠ 1->3->4,
+ * ⁠ 2->6
+ * ]
+ * merging them into one sorted list:
+ * 1->1->2->3->4->4->5->6
+ *
+ *
+ * Example 2:
+ *
+ *
+ * Input: lists = []
+ * Output: []
+ *
+ *
+ * Example 3:
+ *
+ *
+ * Input: lists = [[]]
+ * Output: []
+ *
+ *
+ *
+ * Constraints:
+ *
+ *
+ * k == lists.length
+ * 0 <= k <= 10^4
+ * 0 <= lists[i].length <= 500
+ * -10^4 <= lists[i][j] <= 10^4
+ * lists[i] is sorted in ascending order.
+ * The sum of lists[i].length will not exceed 10^4.
+ *
  *
  */
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
+// @lc code=start
+
 class Solution {
-public:
-    ListNode *mergeTwoLists(ListNode* l1, ListNode* l2) {
-        if (NULL == l1) return l2;
-        else if (NULL == l2) return l1;
-        if (l1->val <= l2->val) {
-            l1->next = mergeTwoLists(l1->next, l2);
-            return l1;
+   public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) return nullptr;
+        int n = lists.size();
+        // 分治
+        while (n > 1) {
+            int k = (n + 1) / 2;
+            for (int i = 0; i < n / 2; ++i) {
+                lists[i] = mergeTwoLists(lists[i], lists[i + k]);
+            }
+            n = k;
         }
-        else {
-            l2->next = mergeTwoLists(l1, l2->next);
-            return l2;
-        }
-    }
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
-        if (lists.empty()) return NULL;
-        int len = lists.size();
-        ListNode* p = lists[0];
-        for(int i = 1; i < len; i++){
-            p = mergeTwoLists(p, lists[i]);
-        }
-        return p;
-        // while (len > 1) {
-        //     for (int i = 0; i < len / 2; ++i) {
-        //         lists[i] = mergeTwoLists(lists[i], lists[len - 1 - i]);
-        //     }
-        //     len = (len + 1) / 2;
-        // }
-        //
-        // return lists.front();
+        return lists[0];
     }
 
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+        ListNode *dummy = new ListNode(0), *cur = dummy;
+        while (a && b) {
+            if (a->val < b->val) {
+                cur->next = a;
+                a = a->next;
+            } else {
+                cur->next = b;
+                b = b->next;
+            }
+            cur = cur->next;
+        }
+        if (a) cur->next = a;
+        if (b) cur->next = b;
+        ListNode* res = dummy->next;
+        delete dummy;
+        return res;
+    }
 };
+// @lc code=end
