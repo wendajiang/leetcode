@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/sliding-window-maximum/description/
  *
  * algorithms
- * Hard (44.47%)
- * Likes:    6833
- * Dislikes: 255
- * Total Accepted:    434.7K
- * Total Submissions: 958.8K
+ * Hard (45.78%)
+ * Likes:    9921
+ * Dislikes: 348
+ * Total Accepted:    577.6K
+ * Total Submissions: 1.2M
  * Testcase Example:  '[1,3,-1,-3,5,3,6,7]\n3'
  *
  * You are given an array of integers nums, there is a sliding window of size k
@@ -44,27 +44,6 @@
  * Output: [1]
  *
  *
- * Example 3:
- *
- *
- * Input: nums = [1,-1], k = 1
- * Output: [1,-1]
- *
- *
- * Example 4:
- *
- *
- * Input: nums = [9,11], k = 2
- * Output: [11]
- *
- *
- * Example 5:
- *
- *
- * Input: nums = [4,-2], k = 2
- * Output: [4]
- *
- *
  *
  * Constraints:
  *
@@ -75,26 +54,30 @@
  *
  *
  */
-
+#include <bits/stdc++.h>
+using namespace std;
 // @lc code=start
 class Solution {
-public:
+   public:
+    // vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+    //     vector<int> res;
+    //     multiset<int> st;
+    //     for (int i = 0; i < nums.size(); i++) {
+    //         if (i >= k) st.erase(st.find(nums[i - k]));
+    //         st.insert(nums[i]);
+    //         if (i >= k - 1) res.push_back(*st.rbegin());
+    //     }
+    //     return res;
+    // }
+
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        auto compare = [](pair<int,int> &l, pair<int, int> &r) {
-            return l.first < r.first;
-        };
-        std::priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(compare)> q(compare);
         vector<int> res;
-        for (int i = 0; i < k; i++) {
-            q.emplace(nums[i], i);
-        }
-        res.push_back(q.top().first);
-        for (int i = k; i < nums.size(); i++) {
-            q.emplace(nums[i], i);
-            while(q.top().second <= i - k) {
-                q.pop();
-            }
-            res.push_back(q.top().first);
+        deque<int> q;
+        for (int i = 0; i < nums.size(); i++) {
+            if (!q.empty() && q.front() == i - k) q.pop_front();
+            while (!q.empty() && nums[q.back()] < nums[i]) q.pop_back();
+            q.push_back(i);
+            if (i >= k - 1) res.push_back(nums[q.front()]);
         }
         return res;
     }
