@@ -6,71 +6,94 @@
  * https://leetcode.com/problems/reorder-list/description/
  *
  * algorithms
- * Medium (33.01%)
- * Likes:    1184
- * Dislikes: 88
- * Total Accepted:    181.1K
- * Total Submissions: 548.1K
+ * Medium (44.20%)
+ * Likes:    5987
+ * Dislikes: 217
+ * Total Accepted:    490.6K
+ * Total Submissions: 1M
  * Testcase Example:  '[1,2,3,4]'
  *
- * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
- * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
- * 
- * You may not modify the values in the list's nodes, only nodes itself may be
- * changed.
- * 
+ * You are given the head of a singly linked-list. The list can be represented
+ * as:
+ *
+ *
+ * L0 → L1 → … → Ln - 1 → Ln
+ *
+ *
+ * Reorder the list to be on the following form:
+ *
+ *
+ * L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+ *
+ *
+ * You may not modify the values in the list's nodes. Only nodes themselves may
+ * be changed.
+ *
+ *
  * Example 1:
- * 
- * 
- * Given 1->2->3->4, reorder it to 1->4->2->3.
- * 
+ *
+ *
+ * Input: head = [1,2,3,4]
+ * Output: [1,4,2,3]
+ *
+ *
  * Example 2:
- * 
- * 
- * Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
- * 
- * 
- */
-
-// @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
+ *
+ *
+ * Input: head = [1,2,3,4,5]
+ * Output: [1,5,2,4,3]
+ *
+ *
+ *
+ * Constraints:
+ *
+ *
+ * The number of nodes in the list is in the range [1, 5 * 10^4].
+ * 1 <= Node.val <= 1000
+ *
+ *
  */
 
 #include <bits/stdc++.h>
 using namespace std;
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+// @lc code=start
 
 class Solution {
-public:
-    void reorderList(ListNode* head) {
-        if (head == nullptr) {
-            return ;
+   public:
+    void reorderList(ListNode *head) {
+        if (!head || !head->next || !head->next->next) return;
+        ListNode *fast = head, *slow = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        ListNode dummy(-1);
-        dummy.next = head;
-        ListNode *p1 = &dummy, *p2 = &dummy;
-        for (; p2 && p2->next; p1 = p1->next, p2 = p2->next->next);
-        for (ListNode *prev = p1, *cur = p1->next; cur && cur->next; ) {
-            ListNode *tmp = cur->next;
-            cur->next = cur->next->next;
-            tmp->next = prev->next;
-            prev->next = tmp;
+        ListNode *mid = slow->next;
+        slow->next = nullptr;
+        // 2. reverse second half
+        ListNode *last = mid, *pre = nullptr;
+        while (last) {
+            ListNode *next = last->next;
+            last->next = pre;
+            pre = last;
+            last = next;
         }
-
-        for (p2 = p1->next, p1->next = nullptr, p1= head; p2; ) {
-            ListNode* tmp = p1->next;
-            p1->next = p2;
-            p2 = p2->next;
-            p1->next->next = tmp;
-            p1 = tmp;
+        // 3. insert node to first half
+        while (head && pre) {
+            ListNode *next = head->next;
+            head->next = pre;
+            pre = pre->next;
+            head->next->next = next;
+            head = next;
         }
-        
     }
 };
 // @lc code=end
-
