@@ -1,37 +1,102 @@
 /*
+ * @lc app=leetcode id=12 lang=cpp
+ *
  * [12] Integer to Roman
  *
- * https://leetcode.com/problems/integer-to-roman
+ * https://leetcode.com/problems/integer-to-roman/description/
  *
- * Medium (44.26%)
- * Total Accepted:    
- * Total Submissions: 
- * Testcase Example:  '1'
+ * algorithms
+ * Medium (58.41%)
+ * Likes:    3276
+ * Dislikes: 4078
+ * Total Accepted:    712.6K
+ * Total Submissions: 1.2M
+ * Testcase Example:  '3'
+ *
+ * Roman numerals are represented by seven different symbols: I, V, X, L, C, D
+ * and M.
+ *
+ *
+ * Symbol       Value
+ * I             1
+ * V             5
+ * X             10
+ * L             50
+ * C             100
+ * D             500
+ * M             1000
+ *
+ * For example, 2 is written as II in Roman numeral, just two one's added
+ * together. 12 is written as XII, which is simply X + II. The number 27 is
+ * written as XXVII, which is XX + V + II.
+ *
+ * Roman numerals are usually written largest to smallest from left to right.
+ * However, the numeral for four is not IIII. Instead, the number four is
+ * written as IV. Because the one is before the five we subtract it making
+ * four. The same principle applies to the number nine, which is written as IX.
+ * There are six instances where subtraction is used:
+ *
+ *
+ * I can be placed before V (5) and X (10) to make 4 and 9. 
+ * X can be placed before L (50) and C (100) to make 40 and 90. 
+ * C can be placed before D (500) and M (1000) to make 400 and 900.
+ *
  *
  * Given an integer, convert it to a roman numeral.
- * 
- * 
- * Input is guaranteed to be within the range from 1 to 3999.
+ *
+ *
+ * Example 1:
+ *
+ *
+ * Input: num = 3
+ * Output: "III"
+ * Explanation: 3 is represented as 3 ones.
+ *
+ *
+ * Example 2:
+ *
+ *
+ * Input: num = 58
+ * Output: "LVIII"
+ * Explanation: L = 50, V = 5, III = 3.
+ *
+ *
+ * Example 3:
+ *
+ *
+ * Input: num = 1994
+ * Output: "MCMXCIV"
+ * Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+ *
+ *
+ *
+ * Constraints:
+ *
+ *
+ * 1 <= num <= 3999
+ *
+ *
  */
+#include <bits/stdc++.h>
+using namespace std;
+// @lc code=start
 class Solution {
-public:
+   public:
     string intToRoman(int num) {
-        string res = "";
-        char roman[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
-        int value[] = {1000, 500, 100, 50, 10, 5, 1};
+        int nums[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        string romains[] = {"M",  "CM", "D",  "CD", "C",  "XC", "L",
+                            "XL", "X",  "IX", "V",  "IV", "I"};
 
-        for (int n = 0; n < 7; n += 2) {
-            int x = num / value[n];
-            if (x < 4) {
-                for (int i = 1; i <= x; ++i) res += roman[n];
-            } else if (x == 4) res = res + roman[n] + roman[n - 1];
-            else if (x > 4 && x < 9) {
-                res += roman[n - 1];
-                for (int i = 6; i <= x; ++i) res += roman[n];
+        string res;
+        int i = 0;
+        while (i < 13) {
+            while (num >= nums[i]) {
+                res += romains[i];
+                num -= nums[i];
             }
-            else if (x == 9) res = res + roman[n] + roman[n - 2];
-            num %= value[n];
+            i++;
         }
         return res;
     }
 };
+// @lc code=end
