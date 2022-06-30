@@ -55,30 +55,30 @@
  *
  *
  */
+#include <bits/stdc++.h>
+using namespace std;
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
 
 // @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+
 class Solution {
-public:
+   public:
     ListNode* insertionSortList(ListNode* head) {
         if (!head) return head;
-        ListNode *preHead = new ListNode(0);
+        ListNode* preHead = new ListNode(0);
         preHead->next = head;
-        while(head && head->next) {
+        while (head && head->next) {
             if (head->val <= head->next->val) {
                 head = head->next;
                 continue;
             }
             ListNode* cur = preHead;
-            while (cur->next->val <= head->next->val)
-                cur = cur->next;
+            while (cur->next->val <= head->next->val) cur = cur->next;
             if (cur != head) {
                 ListNode* next = head->next;
                 head->next = head->next->next;
