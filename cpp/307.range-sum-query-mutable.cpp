@@ -11,7 +11,8 @@
  * Dislikes: 125
  * Total Accepted:    160.2K
  * Total Submissions: 421.7K
- * Testcase Example:  '["NumArray","sumRange","update","sumRange"]\n[[[1,3,5]],[0,2],[1,2],[0,2]]'
+ * Testcase Example:
+ * '["NumArray","sumRange","update","sumRange"]\n[[[1,3,5]],[0,2],[1,2],[0,2]]'
  *
  * Given an integer array nums, handle multiple queries of the following
  * types:
@@ -66,9 +67,11 @@
 // https://en.wikipedia.org/wiki/Fenwick_tree
 // https://oi-wiki.org/ds/fenwick/
 // https://oi-wiki.org/ds/seg/
+#include <bits/stdc++.h>
+using namespace std;
 // @lc code=start
 class NumArray {
-public:
+   public:
     NumArray(vector<int>& nums) {
         origin_nums = nums;
         f_tree.init(nums);
@@ -78,7 +81,6 @@ public:
         int delta = val - origin_nums[index];
         origin_nums[index] = val;
         f_tree.add(index + 1, delta);
-
     }
 
     int sumRange(int left, int right) {
@@ -87,14 +89,11 @@ public:
         return r - l;
     }
 
-private:
-
-
-
+   private:
     class FenwickTree {
-    public:
-        FenwickTree(){}
-        void init(vector<int> &nums) {
+       public:
+        FenwickTree() {}
+        void init(vector<int>& nums) {
             bits.resize(nums.size() + 1);
             for (int i = 1; i <= nums.size(); i++) {
                 bits[i] += nums[i - 1];
@@ -105,7 +104,7 @@ private:
 
         int getSum(int k) {
             int ans = 0;
-            while(k) {
+            while (k) {
                 ans += bits[k];
                 k = k - lowbit(k);
             }
@@ -113,7 +112,7 @@ private:
         }
 
         void add(int index, int delta) {
-            while(index < bits.size()) {
+            while (index < bits.size()) {
                 bits[index] += delta;
                 index = index + lowbit(index);
             }
@@ -126,20 +125,13 @@ private:
             return sum;
         }
 
-        int get(int index) {
-            return rangeSum(index, index + 1);
-        }
+        int get(int index) { return rangeSum(index, index + 1); }
 
-        void set(int index, int val) {
-            add(index, val - get(index));
-        }
+        void set(int index, int val) { add(index, val - get(index)); }
 
-    private:
+       private:
         vector<int> bits;
-        int lowbit(int x) {
-            return (x & (-x));
-        }
-
+        int lowbit(int x) { return (x & (-x)); }
     };
 
     FenwickTree f_tree;
