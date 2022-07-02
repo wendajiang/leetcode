@@ -65,30 +65,32 @@
  *
  *
  */
+#include <bits/stdc++.h>
+using namespace std;
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
 
 // @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Codec {
-public:
+   public:
     // bfs method
     string serialize(TreeNode *root) {
         if (!root) return "";
         string out = "";
-        queue<TreeNode*> q;
+        queue<TreeNode *> q;
         q.push(root);
-        while(!q.empty()) {
+        while (!q.empty()) {
             TreeNode *cur = q.front();
             q.pop();
-            if (cur == nullptr) out.append("#,");
-            else out.append(to_string(cur->val) + ",");
+            if (cur == nullptr)
+                out.append("#,");
+            else
+                out.append(to_string(cur->val) + ",");
             if (cur) {
                 q.push(cur->left);
                 q.push(cur->right);
@@ -102,17 +104,16 @@ public:
         stringstream check(data);
         string str;
         vector<string> vec;
-        while(getline(check, str, ',')) {
+        while (getline(check, str, ',')) {
             vec.push_back(str);
         }
 
-
         int k = 0, n = vec.size();
         TreeNode *root = new TreeNode(stoi(vec[0]));
-        queue<TreeNode*> q;
+        queue<TreeNode *> q;
         q.push(root);
 
-        while(!q.empty()) {
+        while (!q.empty()) {
             TreeNode *cur = q.front();
             q.pop();
             int i = k + 1, j = k + 2;
@@ -124,7 +125,7 @@ public:
                 cur->right = new TreeNode(stoi(vec[j]));
                 q.push(cur->right);
             }
-            k+= 2;
+            k += 2;
         }
         return root;
     }
@@ -132,69 +133,69 @@ public:
     // origin method, inspired by leetcode.1028
     // Encodes a tree to a single string.
     // string serialize(TreeNode* root) {
-        // if (!root) return "";
-        // string out;
-        // dfs(root, 0, out);
-        // return out;
+    // if (!root) return "";
+    // string out;
+    // dfs(root, 0, out);
+    // return out;
     // }
 
     // // Decodes your encoded data to tree.
     // TreeNode* deserialize(string data) {
-        // if (data.empty()) return nullptr;
-        // int i = 0, level = 0, val = 0, N = data.size();
-        // vector<TreeNode*> st;
-        // while(i < N) {
-            // for (level = 0; i < N && data[i] == '&'; i++) {
-                // level ++;
-            // }
-            // int sign = 0;
-            // if (data[i] == '+') {
-                // sign = 1;
-                // i++;
-            // } else if (data[i] == '-') {
-                // sign = -1;
-                // i++;
-            // }
-            // for (val = 0; i < N && isdigit(data[i]); i++) {
-                // val = val * 10 + (data[i] - '0');
-            // }
-            // val *= sign;
-            // TreeNode *node = new TreeNode(val);
-            // while(st.size() > level) st.pop_back();
-            // if (!st.empty()) {
-                // if (!st.back()->left) st.back()->left = node;
-                // else st.back()->right = node;
-            // }
-            // st.push_back(node);
-        // }
-        // dfsClear(st[0]);
-        // return st[0];
+    // if (data.empty()) return nullptr;
+    // int i = 0, level = 0, val = 0, N = data.size();
+    // vector<TreeNode*> st;
+    // while(i < N) {
+    // for (level = 0; i < N && data[i] == '&'; i++) {
+    // level ++;
+    // }
+    // int sign = 0;
+    // if (data[i] == '+') {
+    // sign = 1;
+    // i++;
+    // } else if (data[i] == '-') {
+    // sign = -1;
+    // i++;
+    // }
+    // for (val = 0; i < N && isdigit(data[i]); i++) {
+    // val = val * 10 + (data[i] - '0');
+    // }
+    // val *= sign;
+    // TreeNode *node = new TreeNode(val);
+    // while(st.size() > level) st.pop_back();
+    // if (!st.empty()) {
+    // if (!st.back()->left) st.back()->left = node;
+    // else st.back()->right = node;
+    // }
+    // st.push_back(node);
+    // }
+    // dfsClear(st[0]);
+    // return st[0];
     // }
 
-// private:
+    // private:
     // void dfs(TreeNode *node, int level, string &out) {
-        // for (int i = 0; i < level; i++) {
-            // out += "&";
-        // }
-        // if (!node) {
-            // out +=  ("+" + std::to_string(2000));
-            // return;
-        // } else {
-            // if (node->val >= 0) {
-                // out += "+";
-            // }
-            // out += std::to_string(node->val);
-        // }
-        // dfs(node->left, level + 1, out);
-        // dfs(node->right, level + 1, out);
+    // for (int i = 0; i < level; i++) {
+    // out += "&";
+    // }
+    // if (!node) {
+    // out +=  ("+" + std::to_string(2000));
+    // return;
+    // } else {
+    // if (node->val >= 0) {
+    // out += "+";
+    // }
+    // out += std::to_string(node->val);
+    // }
+    // dfs(node->left, level + 1, out);
+    // dfs(node->right, level + 1, out);
     // }
     // void dfsClear(TreeNode *&node) {
-        // if (!node->left && !node->right && node->val == 2000) {
-            // node = nullptr;
-            // return;
-        // }
-        // if (node->left) dfsClear(node->left);
-        // if (node->right) dfsClear(node->right);
+    // if (!node->left && !node->right && node->val == 2000) {
+    // node = nullptr;
+    // return;
+    // }
+    // if (node->left) dfsClear(node->left);
+    // if (node->right) dfsClear(node->right);
     // }
 };
 
