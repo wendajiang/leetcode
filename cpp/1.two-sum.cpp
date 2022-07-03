@@ -4,7 +4,7 @@
  */
 #include <bits/stdc++.h>
 using namespace std;
-// @lc leetcode=start
+// @lc code=start
 class Solution {
    public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -26,4 +26,4 @@ class Solution {
         return result;
     }
 };
-// @lc leetcode=end
+// @lc code=end
