@@ -55,6 +55,67 @@
  //  
  
 #include <bits/stdc++.h>
+// https://leetcode.com/problems/minimum-number-of-work-sessions-to-finish-the-tasks/solutions/3078601/simplest-explanation-with-traditional-pick-notpick-technique-memoization-bitmasking-c/
+/**
+ * @brief explanation
+ * Intuition
+ * Since we can't arrange the given tasks in some pattern, and apply some greedy approach, we need to try out all possible patterns.
+ * We will use the tradional pick/not pick technqiue with a slight modification.
+ * We will sweep through array and do the tasks which are valid (under session time limit) and not done yet. (maitaining a visited array)
+ * 
+ * Now will check if all tasks are done, if so: will return 1, else will start a new session: return 1 + solveNext();
+ * 
+ * Approach:
+ * curTime -> how much time already consumed from completed tasks
+ * mask -> keep track of tasks done
+ * tasks -> input array
+ * With these variables, we will write a function which will return minimum number of sessions required to do all tasks.
+ * 
+ * Steps:
+ * 1. check if all true
+ * 2. try out doning all valid tasks using for loop(pick/ not pick)
+ * 3. take the minimum one from it as ans
+ * 4. at last, check if ans remains same (=infinity), if so: start new session, else: return ans
+ * 
+ * Complexity:
+ * time and space: O(2^n)
+ * 
+ */
+
+/*
+// bruce search
+class Solution {
+public:
+
+    int limit;
+    int allTrue;
+
+    int solve(int curTime, int mask, vector<int> &tasks){
+        if(mask == allTrue) return 1;       //if all tasks done, return 1 session required only.
+        
+        int minSessions = 1e9;
+        for(int j=0;j<tasks.size();j++){
+            if(!(mask & (1<<j)) and curTime + tasks[j] <= limit){   //check if valid and not done yet
+                minSessions = min(minSessions, solve(curTime + tasks[j], mask + (1<<j), tasks));
+            }
+        }
+        
+        //no task can be done and all tasks are still not done yet, 
+        //so start a new session:
+        if(minSessions == 1e9){     
+            minSessions = 1 + solve(0, mask, tasks);
+            return minSessions;
+        }
+        else return minSessions;
+    }
+
+    int minSessions(vector<int>& tasks, int sessionTime) {
+        limit = sessionTime;
+        allTrue = pow(2, tasks.size()) - 1;     // for n bits, we require 2^n - 1 number in INT.
+        return solve(0, 0, tasks);
+    }
+};
+*/
 //  @lc code=start
 class Solution {
 public:
